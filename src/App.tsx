@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import axios, { AxiosResponse } from 'axios';
 import dayjs from 'dayjs';
 import { motion } from 'motion/react';
 
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import useMousePosition from './assets/components/useMouseEffect';
+import HackerText from './assets/hackerText';
+import { useMediaQuery } from 'usehooks-ts';
 
 dayjs.extend(customParseFormat)
 
@@ -21,9 +23,9 @@ interface LeetData {
     ranking : number;
     contributionPoint :number;
     reputation : number;
-    submissionCalendar :{};
+    submissionCalendar :object;
     recentSubmissions :[];
-    matchedUserStats : 	{};
+    matchedUserStats : 	object;
     acSubmissionNum :[];
     totalSubmissionNum :[];
 }
@@ -31,8 +33,9 @@ interface LeetData {
 function App() {
     
     const [leetData, setLeetData] = useState<LeetData | null>(null);
-    const [ leetDates, setLeetDates ] = useState<String[] | null>(null);
-    const [ streak, setStreak ] = useState<Number>(0);
+    const [ streak, setStreak ] = useState<number>(0);
+    const mousePosition = useMousePosition();
+    const isSmallScreen = useMediaQuery('(min-width: 768px)')
 
     useEffect(() => {
         const getData = async () => {
@@ -50,7 +53,7 @@ function App() {
 
     useEffect(() => {
         if (!leetData || leetData.totalSolved < 1) return;
-        let parsedDates: string[] = [];
+        const parsedDates: string[] = [];
 
         const processSubmissionDates = (submissionCalendar: {}) => {
             const sortedTimestamps = Object.keys(submissionCalendar)
@@ -63,7 +66,6 @@ function App() {
         };
        
         processSubmissionDates(leetData.submissionCalendar);
-        setLeetDates(parsedDates);
 
         console.log(parsedDates[parsedDates.length - 1])
 
@@ -81,65 +83,57 @@ function App() {
 
     }, [leetData]);
 
+    console.log(`isSmallScreen : ${isSmallScreen}`)
     return (
         <>
-            <div style={{ display : 'flex', gap: '0px' }}>
-                <div className='heading-div' style={{ outline: '1px solid white', width: '100%', flex: 1}}>
+            <div style={{ display : 'flex', padding: '30px', margin: 'auto 16px', gap: '28px', flexDirection: 'column'}}>
+                <motion.div 
+                    initial={{ y: isSmallScreen? '12vh' : '35vh'}}
+                    animate={{ y: '0vh' }}
+                    transition={{ duration: 0.8, delay: 3.5, ease: 'circOut' }}
+                    className='heading-div' 
+                    style={{ padding: '0px 30px', justifyContent: 'center', textAlign: 'center'}}>
                     <motion.h2 
-                        initial = {{ opacity: 0 }}
-                        animate = {{ opacity: 1, transition: { duration: 0.5, ease: 'easeIn'}}}
-                        
+                        initial = {{ opacity: 0, y: 20 }}
+                        animate = {{ opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeInOut'}}}
                         style={{ 
                             color : "#ECA72C", 
-                            fontSize : '60px', 
-                            flex: 1
-                    }}>
-                        Aditya Daiska 
+                            fontSize : '60px',
+                            textTransform: 'uppercase',
+                            marginBottom: '-8px'
+                        }}
+                        >
+                            <HackerText text='Aditya Dasika' time={60} />
                     </motion.h2>
-                    <p className='aboutme-caption' style={{ fontSize: '30px' }}>
-                        Full Stack Engineer 
-                    </p>
-                    <p className='aboutme-caption'>
-                        Current Leetcode streak - {streak}
-                    </p>
-                </div>
-                <div className='heading-div' style={{ outline: '1px solid white', width: '100%', borderRadius: '16px'}}>
-                    <div className='about-me' style={{ outline: '1px solid white'}} >
-                        <h2 style={{ textAlign : 'left', color : "#ECA72C",  flex: 1}}>
-                            About me 
-                        </h2>
-                        <p style={{ color: 'white'}}>
-                            I am a software developer at Blueleaves Farms, worked on different projects with React and JavaScript and TypeScript. <br />
-                            Made a new web application for data collection and HR processes 
-                            I am a software developer at Blueleaves Farms, worked on different projects with React and JavaScript and TypeScript. <br />
-                            Made a new web application for data collection and HR processes 
-                            I am a software developer at Blueleaves Farms, worked on different projects with React and JavaScript and TypeScript. <br />
-                            Made a new web application for data collection and HR processes 
+                    <motion.p 
+                        initial = {{ opacity: 0, y: 20 }}
+                        animate = {{ opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeInOut'}}}
+                        className='aboutme-caption' 
+                        style={{ fontSize: '24px', color: 'white', textTransform: 'uppercase' }}
+                    >
+                        <HackerText text='Software Developer' time={45}/>
+                    </motion.p>
+                </motion.div>
+                {/* <div style={{ width: '1080px', margin: '0px auto', color: 'white'}}>
+                    <div className='about-me'>
+                        <h3>About me</h3>
+                        <p>
+                            THis is something i have to make up and write
                         </p>
                     </div>
-                    <div className='about-me' style={{ outline: '1px solid white'}} >
-                        <h2 style={{ textAlign : 'left', color : "#ECA72C",  flex: 1}}>
-                            About me 
-                        </h2>
-                        <p style={{ color: 'white'}}>
-                            I am a software developer at Blueleaves Farms, worked on different projects with React and JavaScript and TypeScript. <br />
-                            Made a new web application for data collection and HR processes 
+                    <div className='experience'>
+                        <h3>Experience</h3>
+                        <p>
+                            <h4>BlueLeaves Farms (2018 - current)</h4>
+                            <p>
+                                An experience working at the company describing the things i worked in adn the software's
+                            </p>
                         </p>
-                    </div>
-                    <div className='about-me' style={{ outline: '1px solid white'}} >
-                        <h2 style={{ textAlign : 'left', color : "#ECA72C",  flex: 1}}>
-                            About me 
-                        </h2>
-                        <p style={{ color: 'white'}}>
-                            I am a software developer at Blueleaves Farms, worked on different projects with React and JavaScript and TypeScript. <br />
-                            Made a new web application for data collection and HR processes 
-                        </p>
-                    </div>
-                </div>
+                    </div>   
+                </div> */}
             </div>
-            <div className='current-contributions'>
-                <h2>Current Contributions</h2>
-            </div>
+            <div className='mouse-event' style={{ position: 'fixed',  left: mousePosition.x ? mousePosition.x - 40 : 0, 
+   top: mousePosition.y ? mousePosition.y - 40 : 0, background: 'radial-gradient(circle, rgba(249,199,132,0.5) 0%, transparent 70%)', height: '80px', width: '80px', borderRadius: '40px' }} />
         </>
     )
 }
