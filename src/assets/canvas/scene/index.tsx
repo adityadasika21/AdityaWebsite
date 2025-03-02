@@ -1,47 +1,64 @@
 
-import { useMemo, useRef } from "react"
-import vertexShader from './shaders/vertextShader.js';
-import fragmentShader from './shaders/fragmentShader.js';
+import { useRef } from "react";
+import * as THREE from 'three';
 import { useFrame } from "@react-three/fiber";
-import { MathUtils } from "three";
+
+import vertexPars from '../shaders/vertex_pars.glsl'
+import vertexMain from '../shaders/vertex_main.glsl'
+import fragmentPars from '../shaders/fragment_pars.glsl'
+import fragmentMain from '../shaders/fragment_main.glsl';
+import { useMediaQuery } from 'usehooks-ts';
 
 export default function Blob () {
-    const mesh = useRef();
-    const hover = useRef(false);
-    const uniforms = useMemo(() => {
-        return {
-            u_time: { value: 0 },
-            u_intensity: { value: 0.3 },
-        };
-    }, []);
-  
-    useFrame((state) => {
-        const { clock } = state;
-        if (mesh.current) {
-            mesh.current.material.uniforms.u_time.value =
-            0.4 * clock.getElapsedTime();
+
+
+    const isSmallScreen = useMediaQuery('(min-width: 768px)');
     
-            mesh.current.material.uniforms.u_intensity.value = MathUtils.lerp(
-            mesh.current.material.uniforms.u_intensity.value,
-            hover.current ? 1 : 0.15,
-            0.02
-            );
+    const mesh = useRef<THREE.Mesh | null>(null);
+
+    const material = new THREE.MeshStandardMaterial()
+    material.onBeforeCompile  = (shader) => {
+        material.userData.shader = shader
+        shader.uniforms.uTime = { value: 0 }
+  
+        const parsVertexString = /* glsl */ `#include <displacementmap_pars_vertex>`
+        shader.vertexShader = shader.vertexShader.replace(
+            parsVertexString,
+            `${parsVertexString}\n${vertexPars}\n`
+        )
+  
+        const mainVertexString = `#include <displacementmap_vertex>\n`;
+        shader.vertexShader = shader.vertexShader.replace(
+            mainVertexString,
+            `${mainVertexString}\n${vertexMain}\n`
+        );
+  
+        const mainFragmentString = /* glsl */ `#include <normal_fragment_maps>`
+        const parsFragmentString = /* glsl */ `#include <bumpmap_pars_fragment>`
+        shader.fragmentShader = shader.fragmentShader.replace(
+            parsFragmentString,
+            `${parsFragmentString}\n${fragmentPars}\n`
+        )
+        shader.fragmentShader = shader.fragmentShader.replace(
+            mainFragmentString,
+            `${mainFragmentString}\n${fragmentMain}\n`
+        )
+    };
+
+    useFrame(({ clock }) => {
+        if (material.userData.shader) {
+            material.userData.shader.uniforms.uTime.value = clock.getElapsedTime() / 2
         }
     });
+
     return (
-        <mesh
-            ref={mesh}
-            scale={1.5}
-            position={[0, 0, 0]}
-            onPointerOver={() => (hover.current = true)}
-            onPointerOut={() => (hover.current = false)}
-        >
-            <icosahedronGeometry args={[2, 20]} />
-            <shaderMaterial
-                vertexShader={vertexShader}
-                fragmentShader={fragmentShader}
-                uniforms={uniforms}
-            />
-        </mesh>
-    );
+        <>
+            <ambientLight color={'#3AAED8'} intensity={1} />
+            <directionalLight color={'#90E2FF'} intensity={1.2} position={[2,2,2]} />
+            <mesh ref={mesh} scale={1.5} position={[0, 0, 0]}>
+                <icosahedronGeometry args={[isSmallScreen ? 0.5 : 1.5, 150]} />
+                <primitive attach="material" object={material} />
+            </mesh>            
+        </>
+    )
 }
