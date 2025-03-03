@@ -34,12 +34,15 @@ export default function Home () {
                 background: "url('https://www.transparenttextures.com/patterns/noisy.png'), rgba(0,0,0,0.1)",
                 mixBlendMode: "overlay",
                 opacity: 0.4,
-                animation: "noise 0.2s steps(2) infinite"
+                animation: "noise 0.2s steps(2) infinite",
+                pointerEvents : 'none'
             }} />
-          
+
+            <div style={{ zIndex : 10}}>
             <Header>
                 <Overlay />
             </Header>
+            </div>
      
             <style>
                 {`

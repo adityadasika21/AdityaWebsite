@@ -11,7 +11,7 @@ function Contact() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }}
     >
       <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Contact Me</h1>
@@ -28,10 +28,19 @@ function Contact() {
             justifyContent: 'center'
           }}
         >
-          <FaEnvelope
-            style={{ marginRight: '0.5rem', animation: 'bounce 2s infinite' }}
-          />
-          Email: <a className="contact-link" href="mailto:akhil.dasika47@gmail.com">akhil.dasika47@gmail.com</a>
+          <FaEnvelope style={{ marginRight: '0.5rem', animation: 'bounce 2s infinite' }} />
+          Email:&nbsp;
+          <a
+            className="contact-link"
+            href="mailto:akhil.dasika47@gmail.com"
+            style={{
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              color: '#000'
+            }}
+          >
+            akhil.dasika47@gmail.com
+          </a>
         </li>
         <li
           style={{
@@ -42,10 +51,21 @@ function Contact() {
             justifyContent: 'center'
           }}
         >
-          <FaLinkedin
-            style={{ marginRight: '0.5rem', animation: 'bounce 2s infinite' }}
-          />
-          LinkedIn: <a className="contact-link" href="https://linkedin.com/in/adityadasika21" target="_blank" rel="noopener noreferrer">adityadasika21</a>
+          <FaLinkedin style={{ marginRight: '0.5rem', animation: 'bounce 2s infinite' }} />
+          LinkedIn:&nbsp;
+          <a
+            className="contact-link"
+            href="https://linkedin.com/in/adityadasika21"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              color: '#000'
+            }}
+          >
+            adityadasika21
+          </a>
         </li>
         <li
           style={{
@@ -56,10 +76,21 @@ function Contact() {
             justifyContent: 'center'
           }}
         >
-          <FaGithub
-            style={{ marginRight: '0.5rem', animation: 'bounce 2s infinite' }}
-          />
-          GitHub: <a className="contact-link" href="https://github.com/adityadasika21" target="_blank" rel="noopener noreferrer">adityadasika21</a>
+          <FaGithub style={{ marginRight: '0.5rem', animation: 'bounce 2s infinite' }} />
+          GitHub:&nbsp;
+          <a
+            className="contact-link"
+            href="https://github.com/adityadasika21"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              color: '#000'
+            }}
+          >
+            adityadasika21
+          </a>
         </li>
         <li
           style={{
@@ -70,27 +101,23 @@ function Contact() {
             justifyContent: 'center'
           }}
         >
-          <FaInstagram
-            style={{ marginRight: '0.5rem', animation: 'bounce 2s infinite' }}
-          />
-          Instagram: <a className="contact-link" href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer">yourusername</a>
+          <FaInstagram style={{ marginRight: '0.5rem', animation: 'bounce 2s infinite' }} />
+          Instagram:&nbsp;
+          <a
+            className="contact-link"
+            href="https://instagram.com/yourusername"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              color: '#000'
+            }}
+          >
+            yourusername
+          </a>
         </li>
       </ul>
-      <style>{`
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-          40% { transform: translateY(-10px); }
-          60% { transform: translateY(-5px); }
-        }
-        .contact-link {
-          text-decoration: none;
-          color: #000;
-          transition: color 0.3s ease;
-        }
-        .contact-link:hover {
-          color: #0077b5;
-        }
-      `}</style>
     </div>
   );
 }
