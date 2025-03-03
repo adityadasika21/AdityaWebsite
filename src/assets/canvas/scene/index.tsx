@@ -12,7 +12,7 @@ import { useMediaQuery } from 'usehooks-ts';
 export default function Blob () {
 
 
-    const isSmallScreen = useMediaQuery('(min-width: 768px)');
+    const isSmallScreen = useMediaQuery('(max-width: 768px)');
     
     const mesh = useRef<THREE.Mesh | null>(null);
 
@@ -56,7 +56,7 @@ export default function Blob () {
             <ambientLight color={'#3AAED8'} intensity={1} />
             <directionalLight color={'#90E2FF'} intensity={1.2} position={[2,2,2]} />
             <mesh ref={mesh} scale={1.5} position={[0, 0, 0]}>
-                <icosahedronGeometry args={[isSmallScreen ? 0.5 : 1.5, 150]} />
+                <icosahedronGeometry args={[isSmallScreen ? 1.4 : 1.5, 150]} />
                 <primitive attach="material" object={material} />
             </mesh>            
         </>

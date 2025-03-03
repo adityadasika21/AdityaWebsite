@@ -8,7 +8,7 @@ function HackerText({ text, time }: { text: string, time : number }) {
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456798";
         const delay = 1000;
         let intervalId: ReturnType<typeof setInterval>;
-    
+     
         const timeoutId = setTimeout(() => {
             intervalId = setInterval(() => {
                 setDisplayText(

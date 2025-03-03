@@ -1,27 +1,26 @@
-import BackgroundScene from "./assets/canvas"
-import Overlay from "./assets/overlay"
+import { lazy } from "react"
+import { Route, Routes } from "react-router-dom";
+import Home from "./views/home/index";
+
 
 function App() {
     
+    const Blog = lazy(() => import('./views/blog/index'));
+    const Project = lazy(() => import('./views/projects/index'));
+
+    const Error = lazy(() => import('./views/error'));
 
     return (
         <>
-            <div style={{
-                position : 'absolute', 
-                width : "100vw",
-                height : "100vh",
-                zIndex : -1
-            }}>
-                <BackgroundScene />
-            </div>
-            <div style={{
-                position : 'absolute', 
-                width : "100vw",
-                height : "100vh",
-                zIndex : 5
-            }}>
-                <Overlay />
-            </div>
+            <Routes>
+            <Route 
+                path="/"
+                element={<Home />}
+            />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/projects" element={<Project />} />
+            <Route path="*"  element={<Error />} />
+            </Routes>
         </>
     )
 }
