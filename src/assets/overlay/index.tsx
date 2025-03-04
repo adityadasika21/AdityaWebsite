@@ -52,6 +52,7 @@ export default function Overlay () {
                     justifyContent: 'flex-start',
                     gap: '40px', 
                     padding : '32px',
+                    margin : '0px auto'
                 }}>
                 <div className="heading-div" style={{ textAlign: 'left', 
                     marginTop: isSmallScreen ? '0px' : '160px', }}>
@@ -107,6 +108,7 @@ export default function Overlay () {
                 justifyContent: 'center',
                 gap: '40px', 
                 padding : '32px',
+                margin : '0px auto'
             }}
             >
                 <Contact />
