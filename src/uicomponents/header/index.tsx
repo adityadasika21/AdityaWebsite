@@ -12,7 +12,7 @@ export default function Header({children} : HeaderProps) {
         <>
             <div
                 style={{
-                    position: "absolute",
+                    position: "absolute", 
                     top: 0,
                     left: "50%",
                     transform: "translateX(-50%)",
