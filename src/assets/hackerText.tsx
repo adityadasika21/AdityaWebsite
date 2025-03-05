@@ -5,7 +5,7 @@ function HackerText({ text, time }: { text: string, time : number }) {
   
     useEffect(() => {
         let iteration = 0;
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456798";
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 123456798";
         const delay = 1000;
         let intervalId: ReturnType<typeof setInterval>;
      

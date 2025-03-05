@@ -15,44 +15,13 @@ export default function Home () {
             <BackgroundScene />
         </div>
         <div style={{
-            position: 'absolute',
-            width: "100vw",
-            minHeight: "100vh",
-            zIndex: 5,
-            backdropFilter: "blur(10px)",  // Heavy blur effect
-            WebkitBackdropFilter: "blur(10px)", // Safari support
-            overflow: "hidden"
+            
         }}>
-          
-            <div style={{
-                content: "''",
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                top: 0,
-                left: 0,
-                background: "url('https://www.transparenttextures.com/patterns/noisy.png'), rgba(0,0,0,0.1)",
-                mixBlendMode: "overlay",
-                opacity: 0.4,
-                animation: "noise 0.2s steps(2) infinite",
-                pointerEvents : 'none'
-            }} />
-
-            <div style={{ zIndex : 10}}>
-            <Header>
-                <Overlay />
-            </Header>
-            </div>
-     
-            <style>
-                {`
-                    @keyframes noise {
-                        0% { background-position: 0 0; }
-                        100% { background-position: 100px 100px; }
-                    }
-                `}
-            </style>
-         
+            <div style={{ zIndex : 1}}>
+                <Header>
+                    <Overlay />
+                </Header>
+            </div> 
         </div>
         </>
     )

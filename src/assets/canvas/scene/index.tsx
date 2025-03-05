@@ -1,64 +1,72 @@
+import * as THREE from "three";
+import { useEffect, useRef } from "react";
+import { useFrame, extend, useThree } from "@react-three/fiber";
+import { shaderMaterial } from "@react-three/drei";
+import fragmentShader from "../shaders/star_nest.glsl";
+import vertexShader from "../shaders/fullscreen_vertex.glsl";
 
-import { useRef } from "react";
-import * as THREE from 'three';
-import { useFrame } from "@react-three/fiber";
+interface StarNestUnifomrs {
+	iTime : { value : number}, 
+	iResolution : { value : THREE.Vector3 },
+	iMouse : { value : THREE.Vector2 }
+}
 
-import vertexPars from '../shaders/vertex_pars.glsl'
-import vertexMain from '../shaders/vertex_main.glsl'
-import fragmentPars from '../shaders/fragment_pars.glsl'
-import fragmentMain from '../shaders/fragment_main.glsl';
-import { useMediaQuery } from 'usehooks-ts';
+const StarNestMaterial = shaderMaterial(
+	{
+		iTime: 0,
+		formuparam : 0.53,
+		zoom : 1.5 ,
+		tile : 0.85 ,
+		darkmatter : 1.5 ,
+		distfading : 0.480,
+		iResolution: new THREE.Vector3(1, 1, 1),
+		iMouse: new THREE.Vector2(0, 0),
+	},
+	vertexShader,
+	fragmentShader
+);
 
-export default function Blob () {
+extend({ StarNestMaterial });
 
+export default function StarField() {
+	const materialRef = useRef<THREE.ShaderMaterial & { uniforms : StarNestUnifomrs}>();
+	const { size, pointer } = useThree();
 
-    const isSmallScreen = useMediaQuery('(max-width: 768px)');
-    
-    const mesh = useRef<THREE.Mesh | null>(null);
+	const scrollRef = useRef(0);
 
-    const material = new THREE.MeshStandardMaterial()
-    material.onBeforeCompile  = (shader) => {
-        material.userData.shader = shader
-        shader.uniforms.uTime = { value: 0 }
-  
-        const parsVertexString = /* glsl */ `#include <displacementmap_pars_vertex>`
-        shader.vertexShader = shader.vertexShader.replace(
-            parsVertexString,
-            `${parsVertexString}\n${vertexPars}\n`
-        )
-  
-        const mainVertexString = `#include <displacementmap_vertex>\n`;
-        shader.vertexShader = shader.vertexShader.replace(
-            mainVertexString,
-            `${mainVertexString}\n${vertexMain}\n`
-        );
-  
-        const mainFragmentString = /* glsl */ `#include <normal_fragment_maps>`
-        const parsFragmentString = /* glsl */ `#include <bumpmap_pars_fragment>`
-        shader.fragmentShader = shader.fragmentShader.replace(
-            parsFragmentString,
-            `${parsFragmentString}\n${fragmentPars}\n`
-        )
-        shader.fragmentShader = shader.fragmentShader.replace(
-            mainFragmentString,
-            `${mainFragmentString}\n${fragmentMain}\n`
-        )
-    };
+	useEffect(() => {
+		const onScroll = () => {
+			scrollRef.current = window.scrollY / window.innerHeight; 
+		};
+		window.addEventListener('scroll', onScroll);
+		return () => window.removeEventListener('scroll', onScroll);
+	})
 
-    useFrame(({ clock }) => {
-        if (material.userData.shader) {
-            material.userData.shader.uniforms.uTime.value = clock.getElapsedTime() / 2
-        }
-    });
+	useFrame(({ clock }) => {
+		if (!materialRef.current) return;
+	  
+		const elapsedTime = clock.getElapsedTime();
+		const scrollFactor = scrollRef.current;
 
-    return (
-        <>
-            <ambientLight color={'#3AAED8'} intensity={1} />
-            <directionalLight color={'#90E2FF'} intensity={1.2} position={[2,2,2]} />
-            <mesh ref={mesh} scale={1.5} position={[0, 0, 0]}>
-                <icosahedronGeometry args={[isSmallScreen ? 1.4 : 1.5, 150]} />
-                <primitive attach="material" object={material} />
-            </mesh>            
-        </>
-    )
+		materialRef.current.uniforms.iTime.value = elapsedTime;
+		materialRef.current.uniforms.distfading.value = 0.48 - scrollFactor * 0.1;
+		// Update resolution only when necessary (avoid every frame)
+		if (materialRef.current.uniforms.iResolution.value.x !== size.width) {
+		  	materialRef.current.uniforms.iResolution.value.set(size.width, size.height, 1);
+		}
+	  
+		// Throttle mouse updates to avoid performance drops
+		if (pointer) {
+		  materialRef.current.uniforms.iMouse.value.lerp(new THREE.Vector2(pointer.x * size.width, pointer.y * size.height), 0.1);
+		}
+	  });
+	  
+
+	return (
+		<mesh>
+			<planeGeometry args={[2, 2]} />
+			{/* @ts-expect-error - extend adds it dynamically */}
+			<starNestMaterial ref={materialRef} />
+		</mesh>
+	);
 }

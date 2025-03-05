@@ -23,6 +23,8 @@ export default function Header ({ children } : HeaderProps ) {
                     zIndex: 100,
                     margin: '0 auto',
                     overflow: 'auto',
+                    color : 'white',
+                    mixBlendMode : 'difference'
                 }}
             >
                 <Link to={'/blog'}>Learnings</Link>

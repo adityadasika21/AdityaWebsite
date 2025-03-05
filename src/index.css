@@ -3,12 +3,12 @@
 @import "tailwindcss";
 
 :root {
-  font-family: Anta;
-  background-color: #FBFFF1;
+	font-family: Anta;
+	background-color: black;
 }
 
 html, body {
-  height: 100%;
-  overflow: auto;
+	height: 100%;
+	overflow: auto;
 }
 
