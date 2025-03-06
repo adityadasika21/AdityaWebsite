@@ -14,11 +14,11 @@ function Contact() {
         justifyContent: 'center',
       }}
     >
-      <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Contact Me</h1>
-      <p style={{ fontSize: '1.5rem', marginBottom: '2rem' }}>
+      <h1 style={{ fontSize: '3rem', marginBottom: '1rem', color: 'white' }}>Contact Me</h1>
+      <p style={{ fontSize: '1.5rem', marginBottom: '2rem', color: 'white' }}>
         I’m always excited to connect! Whether you want to chat about code, share ideas, or just say hi—drop me a line.
       </p>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul style={{ listStyle: 'none', padding: 0, color: 'white' }}>
         <li
           style={{
             margin: '1rem 0',
@@ -36,7 +36,7 @@ function Contact() {
             style={{
               cursor: 'pointer',
               textDecoration: 'underline',
-              color: '#000'
+              color: 'white'
             }}
           >
             akhil.dasika47@gmail.com
@@ -61,7 +61,7 @@ function Contact() {
             style={{
               cursor: 'pointer',
               textDecoration: 'underline',
-              color: '#000'
+              color: 'white'
             }}
           >
             adityadasika21
@@ -86,7 +86,7 @@ function Contact() {
             style={{
               cursor: 'pointer',
               textDecoration: 'underline',
-              color: '#000'
+              color: 'white'
             }}
           >
             adityadasika21
@@ -111,7 +111,7 @@ function Contact() {
             style={{
               cursor: 'pointer',
               textDecoration: 'underline',
-              color: '#000'
+              color: 'white'
             }}
           >
             yourusername

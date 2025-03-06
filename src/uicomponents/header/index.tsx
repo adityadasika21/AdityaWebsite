@@ -1,36 +1,54 @@
-import {ReactNode} from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ReactNode, useState } from "react";
 
 interface HeaderProps {
-    children: ReactNode;
+    children : ReactNode
 }
-
-export default function Header ({ children } : HeaderProps ) {
+export default function Header({children} : HeaderProps) {
+    const [active, setActive] = useState<string | null>(null);
 
     return (
         <>
             <div
                 style={{
-                    position: 'absolute',
-                    top: 0, // Stays at the top
-                    left: '50%', // Moves the left edge to the center
-                    transform: 'translateX(-50%)', // Shifts it back by half its width
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    transform: "translateX(-50%)",
                     maxWidth: "1080px",
-                    padding: '32px',
-                    width: '100%',
-                    justifyContent: 'space-between',
+                    padding: "32px",
+                    width: "100%",
+                    justifyContent: "space-between",
                     display: "flex",
                     zIndex: 100,
-                    margin: '0 auto',
-                    overflow: 'auto',
-                    color : 'white',
-                    mixBlendMode : 'difference'
+                    margin: "0 auto",
+                    overflow: "auto",
+                    color: "white",
+                    mixBlendMode: "difference",
                 }}
             >
-                <Link to={'/blog'}>Learnings</Link>
-                <Link to={'/projects'}>Projects</Link>
+                {["/blog", "/projects"].map((path) => (
+                <motion.div
+                    key={path}
+                    initial={{ opacity: 1 }}
+                    animate={
+                    active === path
+                        ? { y: "50vh", scale: 3, color: "#fff" }
+                        : { scale: 1, y: 0 }
+                    }
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    onClick={() => setActive(path)}
+                >
+                    <Link to={path} style={{ textDecoration: "none", color: "inherit" }}>
+                    <motion.span layoutId="page-title">
+                        {path.replace("/", "").toUpperCase()}
+                    </motion.span>
+                    </Link>
+                </motion.div>
+                ))}
             </div>
-                <div>{children}</div>
+            <div>{children}</div>
         </>
-    )
+    );
 }

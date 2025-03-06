@@ -13,7 +13,7 @@ export default function Overlay () {
 
     return (
         <>
-            <div style={{ display : 'flex', flexDirection: 'column', maxWidth: '1024px', minHeight : '100vh',  justifyContent : 'center', margin : '0px auto'}}>
+            <div style={{ display : 'flex', flexDirection: 'column', maxWidth: '1080px', minHeight : '100vh',  justifyContent : 'center', margin : '0px auto'}}>
             
                 <div 
                     className='heading-div' 
@@ -49,7 +49,7 @@ export default function Overlay () {
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    maxWidth: '1024px',
+                    maxWidth: '1080px',
                     height: '100svh',
                     justifyContent: 'flex-start',
                     gap: '40px', 

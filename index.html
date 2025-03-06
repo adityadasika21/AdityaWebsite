@@ -1,27 +1,57 @@
 <!doctype html>
 <html lang="en">
   <head>
- 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6W82GMK7S7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-6W82GMK7S7');
-  </script>
-
+    <!-- Meta Basic -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="theme-color" content="#343434" />
+    <meta name="author" content="Aditya Dasika" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- SEO Meta -->
+    <title>Aditya Dasika - Developer & Creator</title>
+    <meta name="description" content="Aditya Dasika - Building cool projects, exploring technology, and sharing knowledge on software development, design, and innovation." />
+    <meta name="keywords" content="Aditya Dasika, Web Developer, Software Engineer, JavaScript, React, Framer Motion, UI/UX, Blog, Portfolio" />
+    
+    <!-- Open Graph (OG) - Social Media Preview -->
+    <meta property="og:title" content="Aditya Dasika - Developer & Creator" />
+    <meta property="og:description" content="Building cool projects, exploring technology, and sharing knowledge on software development, design, and innovation." />
+    <meta property="og:image" content="https://yourwebsite.com/og-image.jpg" />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Aditya Dasika - Developer & Creator" />
+    <meta name="twitter:description" content="Building cool projects, exploring technology, and sharing knowledge on software development, design, and innovation." />
+    <meta name="twitter:image" content="https://yourwebsite.com/twitter-card.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6W82GMK7S7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-6W82GMK7S7');
+    </script>
+
+    <!-- Styles -->
     <link href="/src/index.css" rel="stylesheet">
-    <title>Aditya Dasika</title>
+
+    <!-- Performance Optimization -->
+    <link rel="preload" href="/src/index.css" as="style">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   </head>
   <body>
     <div id="root"></div>
-    <!-- import this BEFORE any scripts -->
-    <!-- <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script> -->
+
+    <!-- Main React App -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

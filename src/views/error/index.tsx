@@ -5,6 +5,7 @@ export default function Error() {
 
   return (
     <div
+    data-barba = "container"
       style={{
         display: 'flex',
         flexDirection: 'column',
