@@ -2,6 +2,9 @@ import { useMediaQuery } from 'usehooks-ts';
 import HackerText from '../hackerText';
 import Contact from './components/contact';
 import PreviousExperience from './components/prevexp';
+import { motion } from 'motion/react'
+import { FaDownload, FaGithubSquare, FaInstagramSquare, FaTwitterSquare } from 'react-icons/fa';
+import { FaLocationDot } from 'react-icons/fa6';
 
 export default function Overlay () {
 
@@ -33,14 +36,42 @@ export default function Overlay () {
                         <HackerText text='Backend Developer' time={50}/>
                     </p>
                 </div> 
-                
-                <div style={{ fontSize : '16px', justifyContent : 'center', alignContent : 'center', display : 'flex'}}>
-                    <p style={{ 
-                        backgroundColor : 'rgba(113,179,64,0.6)', padding : '16px', textAlign: 'center', 
-                        borderRadius: '100px', fontWeight : 600, outline : '6px double rgba(0,0,0,1)', textDecoration : 'underline', pointerEvents : 'all', width : 'fit-content' }}
-                        onClick={() => {console.log('Downloading Resume')}}>
-                        Actively looking for a job<br />Click to download my CV</p>
-                </div> 
+                <motion.div 
+                    style={{ 
+                        fontSize: '16px', 
+                        width: '80%', 
+                        margin: '0px auto', 
+                        display: 'grid', 
+                        gridTemplateColumns: '1fr auto 1fr', /* Ensures center alignment */
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(113,179,64,0.6)', 
+                        padding: '16px',
+                        borderRadius: '12px', 
+                        fontWeight: 600, 
+                        outline: '6px double rgba(0,0,0,1)',
+                    }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: 'easeInOut', delay : 3 }}
+                >                    
+                    {/* Left Section: Location */}
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center' }}>
+                        <FaLocationDot /> Hyderabad
+                    </div>
+
+                    {/* Center Section: Resume */}
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center', justifySelf: 'center' }}>
+                        Resume <FaDownload />
+                    </div>
+
+                    {/* Right Section: Social Links */}
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', fontSize: '24px', justifySelf: 'end' }}>
+                        <a target='_blank' rel='noopener norefferer' href='https://github.com/adityadasika21/'><FaGithubSquare /></a>
+                        <a target='_blank' rel='noopener norefferer' href='https://instagram.com/drstupidity21'><FaInstagramSquare/></a>
+                        <a target='_blank' rel='noopener norefferer' href='https://x.com/dasika47'><FaTwitterSquare /></a>
+                    </div>
+                </motion.div>
+
             </section> 
             <section
                 className="name-landing-div"
