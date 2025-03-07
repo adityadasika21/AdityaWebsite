@@ -13,7 +13,7 @@ export default function Home () {
             zIndex : -1
         }}>
             <BackgroundScene />
-        </div>
+        </div> 
         <div style={{
             position: 'absolute',
             width: "100vw",
@@ -37,13 +37,9 @@ export default function Home () {
                 animation: "noise 0.2s steps(2) infinite",
                 pointerEvents : 'none'
             }} />
-
-            <div style={{ zIndex : 10}}>
-            <Header>
-                <Overlay />
-            </Header>
-            </div>
-     
+                {/* <Header>    </Header> */}
+                    <Overlay />
+            
             <style>
                 {`
                     @keyframes noise {
@@ -52,8 +48,8 @@ export default function Home () {
                     }
                 `}
             </style>
-         
-        </div>
+      
+        </div> 
         </>
     )
 }

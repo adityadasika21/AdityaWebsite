@@ -47,7 +47,7 @@ export default function Blob () {
 
     useFrame(({ clock }) => {
         if (material.userData.shader) {
-            material.userData.shader.uniforms.uTime.value = clock.getElapsedTime() / 2
+            material.userData.shader.uniforms.uTime.value = clock.getElapsedTime() / 25
         }
     });
 
@@ -56,7 +56,7 @@ export default function Blob () {
             <ambientLight color={'#3AAED8'} intensity={1} />
             <directionalLight color={'#90E2FF'} intensity={1.2} position={[2,2,2]} />
             <mesh ref={mesh} scale={1.5} position={[0, 0, 0]}>
-                <icosahedronGeometry args={[isSmallScreen ? 1.4 : 1.5, 150]} />
+                <icosahedronGeometry args={[isSmallScreen ? 1.4 : 2, 120]} />
                 <primitive attach="material" object={material} />
             </mesh>            
         </>

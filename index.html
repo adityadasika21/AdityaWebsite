@@ -1,27 +1,47 @@
 <!doctype html>
 <html lang="en">
   <head>
- 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6W82GMK7S7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-6W82GMK7S7');
-  </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6W82GMK7S7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6W82GMK7S7');
+    </script>
 
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Personal website of Aditya Dasika, showcasing projects, blogs, and more." />
+    <meta name="keywords" content="Aditya Dasika, portfolio, projects, technology, development" />
+    <meta name="author" content="Aditya Dasika" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph (OG) for social media -->
+    <meta property="og:title" content="Aditya Dasika" />
+    <meta property="og:description" content="Explore my projects, blogs, and more." />
+    <meta property="og:image" content="/assets/og-image.png" />
+    <meta property="og:url" content="https://adityadasika21.web.app" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Aditya Dasika" />
+    <meta name="twitter:description" content="Explore my projects, blogs, and more." />
+    <meta name="twitter:image" content="/assets/twitter-image.png" />
+    <meta name="twitter:creator" content="@dasika47" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/assets/AD.png" />
+    <link rel="icon" type="image/png" href="/assets/AD.png" />
+    <link rel="apple-touch-icon" href="/assets/AD.png" />
+    <link rel="manifest" href="/assets/site.webmanifest" />
+
     <link href="/src/index.css" rel="stylesheet">
     <title>Aditya Dasika</title>
   </head>
   <body>
     <div id="root"></div>
-    <!-- import this BEFORE any scripts -->
-    <!-- <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script> -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

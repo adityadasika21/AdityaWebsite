@@ -23,12 +23,13 @@ export default function Header ({ children } : HeaderProps ) {
                     zIndex: 100,
                     margin: '0 auto',
                     overflow: 'auto',
+                    fontSize : '20px'
                 }}
             >
                 <Link to={'/blog'}>Learnings</Link>
                 <Link to={'/projects'}>Projects</Link>
             </div>
-                <div>{children}</div>
+            <div>{children}</div>
         </>
     )
 }

@@ -1,29 +1,23 @@
 import { useMediaQuery } from 'usehooks-ts';
 import HackerText from '../hackerText';
-import { useInView } from 'react-intersection-observer';
-import Contact from '../../uicomponents/contact';
+import Contact from './components/contact';
+import PreviousExperience from './components/prevexp';
 
 export default function Overlay () {
 
     const isSmallScreen = useMediaQuery('(max-width : 768px');
-    const { ref, inView } = useInView({
-        threshold : 0.2,
-        triggerOnce : true
-    })
 
     return (
         <>
-            <div style={{ display : 'flex', flexDirection: 'column', maxWidth: '1024px', minHeight : '100vh',  justifyContent : 'center', margin : '0px auto'}}>
-            
+            <section style={{ display : 'flex', flexDirection: 'column', maxWidth: '1024px', minHeight : '100vh',  justifyContent : 'center', margin : 'auto auto', gap: '100px'}}>
                 <div 
-                    className='heading-div' 
-                    style={{ textAlign : "center" }}>
-
+                    style={{ textAlign : "center", display : 'flex', justifyContent : 'center', gap : '0px', flexDirection : 'column', paddingTop: '64px' }}>
                     <h2 
                         style={{ 
                             color : "#000", 
-                            fontSize : isSmallScreen ? '80px' : "84px",
-                            textTransform: 'uppercase',
+                            fontSize : isSmallScreen ? '80px' : "112px",
+                            textTransform: 'uppercase', 
+                            fontFamily : 'Anta'
                         }}
                         >
                             <HackerText text='Aditya Dasika' time={60} />
@@ -33,71 +27,34 @@ export default function Overlay () {
                         style={{ 
                             fontSize: isSmallScreen ? '22px' : '32px', 
                             color: '#000', 
-                            textTransform: 'uppercase' 
+                            textTransform: 'uppercase', fontFamily : 'Anta' 
                         }}
                     >
-                        <HackerText text='FullStack Developer' time={45}/>
+                        <HackerText text='Backend Developer' time={50}/>
                     </p>
                 </div> 
-            
-            </div> 
+                
+                <div style={{ fontSize : '16px', justifyContent : 'center', alignContent : 'center', display : 'flex'}}>
+                    <p style={{ 
+                        backgroundColor : 'rgba(113,179,64,0.6)', padding : '16px', textAlign: 'center', 
+                        borderRadius: '100px', fontWeight : 600, outline : '6px double rgba(0,0,0,1)', textDecoration : 'underline', pointerEvents : 'all', width : 'fit-content' }}
+                        onClick={() => {console.log('Downloading Resume')}}>
+                        Actively looking for a job<br />Click to download my CV</p>
+                </div> 
+            </section> 
             <section
-                ref = {ref}
                 className="name-landing-div"
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
                     maxWidth: '1024px',
-                    height: '100svh',
+                    minHeight: '100svh',
                     justifyContent: 'flex-start',
                     gap: '40px', 
                     padding : '32px',
                     margin : '0px auto'
                 }}>
-                <div className="heading-div" style={{ textAlign: 'left', 
-                    marginTop: isSmallScreen ? '0px' : '160px', }}>
-                    <h2
-                        style={{
-                            color: '#000',
-                            fontSize: isSmallScreen ? '32px' : '44px',
-                            textTransform: 'uppercase'
-                        }}> { inView ? <HackerText text='Previous Experience' time={60} /> : ""} </h2>
-
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            marginBottom: '1rem'
-                        }}>
-                        <span
-                            style={{
-                            fontFamily: 'Geist Mono, monospace',
-                            fontSize: isSmallScreen ? '14px' : '20px',
-                            color: '#000', 
-                            fontWeight : 600
-                            }}
-                        > {inView ? <HackerText text='Blueleaves Farms' time={60} /> : ''} </span>
-                        <span
-                            style={{
-                            fontFamily: 'Geist Mono, monospace',
-                            fontSize: isSmallScreen ? '14px' : '20px',
-                            color: '#000', fontWeight : 600
-                            }}> <HackerText text='Sept 2022 – Feb 2025' time={60} /> </span>
-                    </div>                  
-                </div>
-                <div>
-                    <p
-                        className="aboutme-caption"
-                        style={{
-                            fontFamily: 'Geist Mono, monospace',
-                            fontSize: isSmallScreen ? '16px' : '18px',
-                            color: '#000'
-                        }}
-                    >
-                    At Blueleaves Farms, my work life transformed into a full-blown tech circus—imagine this: I crafted a mind-blowing threejs website that was like a digital modern art gallery, drawing in curious onlookers with every pixel. But wait, that was just the opening act! Next came the Bluecradle webapp, a Swiss Army knife of a tool managing consignment, inventory, and all the behind-the-scenes magic. Picture me as a one-person band, orchestrating end-to-end systems with Firebase Firestore and Google Cloud Functions, where every line of code was a high-wire act that left bugs trembling in their boots. Amidst the chaos of juggling features and dodging digital banana peels, I found endless opportunities to learn, laugh, and occasionally sneak in a coffee break—and you know what else goes with coffee :). I'm genuinely thankful for this wild ride at Blueleaves Farms—it felt like being handed a backstage pass to the most entertaining tech show ever!
-                    </p>
-                </div>
+                <PreviousExperience />
             </section>
             <section 
              style={{
