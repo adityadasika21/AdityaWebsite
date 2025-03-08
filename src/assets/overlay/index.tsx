@@ -14,7 +14,7 @@ export default function Overlay () {
     const isSmallScreen = useMediaQuery('(max-width : 768px');
 
     const handleDownload = async () => {
-        const pathReference = ref(storage, 'Aditya_Resume-1.pdf');
+        const pathReference = ref(storage , "gs://adityadasika21.firebasestorage.app/Aditya_Resume.pdf");
         const url = await getDownloadURL(pathReference);
 
         window.open(url, "_blank")
@@ -46,16 +46,18 @@ export default function Overlay () {
                         <HackerText text='Fullstack Engineer' time={50}/>
                     </p>
                 </div> 
-                
                 <motion.div 
-                    style={{ fontSize : '16px', width : '80%', margin : '0px auto', display : 'flex', justifyContent : 'space-between',
-                        backgroundColor : 'rgba(113,179,64,0.6)', padding : '16px',borderRadius: '12px', alignItems : 'center',
-                        fontWeight : 600, outline : '6px double rgba(0,0,0,1)'
-                    }}
+                    style={{ textAlign : 'center', gap : '8px', display : 'flex', flexDirection : 'column', justifyContent : 'center', alignItems : 'center'}}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: 'easeInOut', delay : 3 }}
-                >                    
+                >
+                    <p style={{ padding : '4px 12px', backgroundColor: 'rgba(255,255,255,0.5)', width : 'fit-content', borderRadius : '400px'}}>Actively looking for a job</p>
+                    <div 
+                    style={{ fontSize : '16px', width : '80%', margin : '0px auto', display : 'flex', justifyContent : 'space-between',
+                        backgroundColor : 'rgba(113,179,64,0.6)', padding : '16px',borderRadius: '12px', alignItems : 'center',
+                        fontWeight : 600, outline : '6px double rgba(0,0,0,1)'
+                    }}>                    
                     <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center', justifySelf: 'center' }}
                         onClick={() => handleDownload()}
                     >
@@ -68,7 +70,9 @@ export default function Overlay () {
                         Resume <FaDownload />
                     </div>
 
-                </motion.div> 
+                    </div> 
+                </motion.div>
+                
             </section> 
             <section
                 className="name-landing-div"

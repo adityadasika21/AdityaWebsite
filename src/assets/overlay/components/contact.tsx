@@ -10,12 +10,13 @@ function Contact() {
 			style={{
 				padding: '2rem',
 				textAlign: 'center',
+				borderRadius : '20px',
 				fontFamily: 'Geist Mono, monospace',
-				minHeight: '100vh',
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
 				justifyContent: 'center',
+				backgroundColor: "rgba(251,255,241,0.5)",
 			}}
 		>
 			<h1 style={{ fontSize: isSmallScreen ? "36px" : "48px", fontFamily : 'Anta',  marginBottom: '1rem', fontWeight : 600 }}>Contact Me</h1>
