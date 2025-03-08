@@ -1,65 +1,85 @@
-import { useMediaQuery } from "usehooks-ts"
-import HackerText from "../../hackerText";
+import { useMediaQuery } from "usehooks-ts";
 
 export default function PreviousExperience() {
-    
-    const isSmallScreen = useMediaQuery('(max-width : 768px');
+	const isSmallScreen = useMediaQuery("(max-width: 768px)");
+
+    const resumeItems = [
+        "Built a consignment distribution and invoicing system with POS support to handle sales transactions and automate invoice generation.",
+        "Added product and store management, allowing CRUD operations based on location to plan delivery routes efficiently.",
+        "Set up Firebase Authentication to enable branch-level inventory tracking and farm-specific data entry with role-based access.",
+        "Developed a procurement system that tracks vendors, compares prices, and assists in ordering supplies.",
+        "Created an accounting section for managing expenses, logging leaves, and tracking payroll.",
+        "Added user management and permissions, allowing different roles to access specific parts of the web app.",
+        "Built two server-side functions deployed on Firebase Cloud Functions, triggered via HTTP REST API calls to generate invoices and process user payslips, automating payroll management.",
+        "Built a company website using React, Vite, Firebase, and Razorpay to display products and handle online payments.",
+        "Used React Three Fiber to add interactive 3D elements to the storefront.",
+        "Connected the website to the internal system for inventory tracking, order management, and delivery scheduling."
+    ];
 
     return (
-        <>
-            <div className="heading-div" style={{ textAlign: 'left', marginTop: isSmallScreen ? '0px' : '160px', }}>
-                <h2 style={{ color: '#000', fontSize: isSmallScreen ? '32px' : '44px',
-                    textTransform: 'uppercase', fontFamily : 'Anta'}}> 
-                { <HackerText text='Previous Experience' time={60} />} </h2>
+        <div style={{ margin: "0 auto",  }}>
+            {/* Heading */}
+            <div style={{ textAlign: "center", marginBottom: "40px" }}>
+                <h2
+                    style={{
+                        color: "#000",
+                        fontSize: isSmallScreen ? "36px" : "48px",
+                        textTransform: "uppercase",
+                        fontFamily: "Anta",
+                        marginBottom: "20px",
+                    }}
+                >
+                    Career
+                </h2>
 
-                    <div
+                {/* Company Details */}
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        backgroundColor: "rgba(0,0,0,0.05)",
+                        padding: "12px 20px",
+                        borderRadius: "8px",
+                    }}
+                >
+                    <span
                         style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            marginBottom: '1rem'
-                        }}>
-                        <span
-                            style={{
-                            fontFamily: 'Geist Mono, monospace',
-                            fontSize: isSmallScreen ? '14px' : '20px',
-                            color: '#000', 
-                            fontWeight : 600
-                            }}
-                        > {<HackerText text='Blueleaves Farms' time={60} /> } </span>
-                        <span
-                            style={{
-                            fontSize: isSmallScreen ? '14px' : '20px',
-                            color: '#000', fontWeight : 600
-                            }}> { <HackerText text='Sept 2022 – Feb 2025' time={60} />} </span>
-                    </div>                  
-                </div>
-                <div>
-                    <p
-                        className="aboutme-caption"
-                        style={{
-                            fontFamily: 'Geist Mono, monospace',
-                            fontSize: isSmallScreen ? '16px' : '18px',
-                            color: '#000',
+                            fontFamily: "Geist Mono, monospace",
+                            fontSize: isSmallScreen ? "14px" : "18px",
+                            fontWeight: 600,
+                            color: "#000",
                         }}
                     >
-                    At Blueleaves Farms, my work life transformed into a full-blown tech circus—imagine this: I crafted a mind-blowing threejs website that was like a digital modern art gallery, drawing in curious onlookers with every pixel. But wait, that was just the opening act! Next came the Bluecradle webapp, a Swiss Army knife of a tool managing consignment, inventory, and all the behind-the-scenes magic. Picture me as a one-person band, orchestrating end-to-end systems with Firebase Firestore and Google Cloud Functions, where every line of code was a high-wire act that left bugs trembling in their boots. Amidst the chaos of juggling features and dodging digital banana peels, I found endless opportunities to learn, laugh, and occasionally sneak in a coffee break—and you know what else goes with coffee :). I'm genuinely thankful for this wild ride at Blueleaves Farms—it felt like being handed a backstage pass to the most entertaining tech show ever!
-                    </p>
+                        Blueleaves Farms
+                    </span>
+                    <span
+                        style={{
+                            fontSize: isSmallScreen ? "14px" : "18px",
+                            fontWeight: 600,
+                            color: "#000",
+                        }}
+                    >
+                        Sept 2022 – Feb 2025
+                    </span>
                 </div>
-                <h2 style={{ fontSize : '24px'}}>Projects I did at the previous company</h2>
+            </div>
 
-                <div style={{ display: 'flex', gap: '20px', outline : '2px solid black', minWidth : '100%', minHeight : isSmallScreen ?'90vh' : '40vh', borderRadius: '20px', padding : '16px', flexDirection : isSmallScreen ? 'column' : 'row' }}>
-                    <div style={{ flex: 1, outline: '1px solid black', borderRadius : '10px', height : '100%' }}>
-                        <h1 style={{ fontSize : '32px'}}>BlueCradle</h1>
-                    </div>
-                    <div style={{ flex: 1, outline: '1px solid black', borderRadius : '10px', height : '100%' }}></div>
-                </div>
-                <div style={{ display: 'flex', gap: '20px', outline : '2px solid black', minWidth : '100%', minHeight : isSmallScreen ?'90vh' : '40vh', borderRadius: '20px', padding : '16px', flexDirection : isSmallScreen ? 'column' : 'row' }}>
-                    <div style={{ flex: 1, outline: '1px solid black', borderRadius : '10px', height : '100%' }}>
-                        <h1 style={{ fontSize : '32px'}}>BlueCradle</h1>
-                    </div>
-                    <div style={{ flex: 1, outline: '1px solid black', borderRadius : '10px', height : '100%' }}></div>
-                </div>
-        </>
-    )
+            {/* Resume Items */}
+            <div
+                style={{
+                    backgroundColor: "rgba(251,255,241,0.5)",
+                    borderRadius: "10px",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                    padding: "30px",
+                }}
+            >
+                <ul style={{ listStyleType: "disc", paddingLeft: "8px" }}>
+                    {resumeItems.map((item, index) => (
+                        <li key={index} style={{ marginBottom: "14px", fontSize: isSmallScreen ? "14px" : "18px", lineHeight: "1.6" }}>{item}</li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
 }

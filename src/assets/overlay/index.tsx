@@ -3,10 +3,11 @@ import HackerText from '../hackerText';
 import Contact from './components/contact';
 import PreviousExperience from './components/prevexp';
 import { motion } from 'motion/react'
-import { FaDownload, FaGithubSquare, FaInstagramSquare, FaTwitterSquare } from 'react-icons/fa';
+import { FaDownload} from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../../context/firebase';
+import Projects from '../../views/projects';
 
 export default function Overlay () {
 
@@ -42,77 +43,32 @@ export default function Overlay () {
                             textTransform: 'uppercase', fontFamily : 'Anta' 
                         }}
                     >
-                        <HackerText text='Backend Developer' time={50}/>
+                        <HackerText text='Fullstack Engineer' time={50}/>
                     </p>
                 </div> 
-                { isSmallScreen ?
-                  <motion.div 
-                  style={{ fontSize : '16px', width : '80%', margin : '0px auto', display : 'flex', justifyContent : 'space-between',
-                    backgroundColor : 'rgba(113,179,64,0.6)', padding : '16px',borderRadius: '12px', alignItems : 'center',
-                    fontWeight : 600, outline : '6px double rgba(0,0,0,1)',
-                }}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: 'easeInOut', delay : 3 }}
-              >                    
                 
-
-                  {/* Center Section: Resume */}
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center', justifySelf: 'center' }}
-                      onClick={() => handleDownload()}
-                  >
-                      Resume <FaDownload />
-                  </div>
-
-                  {/* Right Section: Social Links */}
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', fontSize: '24px', justifySelf: 'end' }}>
-                      <a target='_blank' rel='noopener norefferer' href='https://github.com/adityadasika21/'><FaGithubSquare /></a>
-                      <a target='_blank' rel='noopener norefferer' href='https://instagram.com/drstupidity21'><FaInstagramSquare/></a>
-                      <a target='_blank' rel='noopener norefferer' href='https://x.com/dasika47'><FaTwitterSquare /></a>
-                  </div>
-              </motion.div>
-                :
                 <motion.div 
-                style={{ 
-                    fontSize: '16px', 
-                    width: '80%', 
-                    margin: '0px auto', 
-                    display: 'grid', 
-                    gridTemplateColumns: '1fr auto 1fr', /* Ensures center alignment */
-                    alignItems: 'center',
-                    backgroundColor: 'rgba(113,179,64,0.6)', 
-                    padding: '16px',
-                    borderRadius: '12px', 
-                    fontWeight: 600, 
-                    outline: '6px double rgba(0,0,0,1)',
-                    flexDirection : isSmallScreen ? 'row' : 'column',
-                }}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: 'easeInOut', delay : 3 }}
-            >                    
-                {/* Left Section: Location */}
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center' }}>
-                    <FaLocationDot /> Hyderabad
-                </div>
+                    style={{ fontSize : '16px', width : '80%', margin : '0px auto', display : 'flex', justifyContent : 'space-between',
+                        backgroundColor : 'rgba(113,179,64,0.6)', padding : '16px',borderRadius: '12px', alignItems : 'center',
+                        fontWeight : 600, outline : '6px double rgba(0,0,0,1)'
+                    }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: 'easeInOut', delay : 3 }}
+                >                    
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center', justifySelf: 'center' }}
+                        onClick={() => handleDownload()}
+                    >
+                        <FaLocationDot /> Hyderabad
+                    </div>
 
-                {/* Center Section: Resume */}
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center', justifySelf: 'center' }}
-                    onClick={() => handleDownload()}
-                >
-                    Resume <FaDownload />
-                </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'center', justifySelf: 'center' }}
+                        onClick={() => handleDownload()}
+                    >
+                        Resume <FaDownload />
+                    </div>
 
-                {/* Right Section: Social Links */}
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', fontSize: '24px', justifySelf: 'end' }}>
-                    <a target='_blank' rel='noopener norefferer' href='https://github.com/adityadasika21/'><FaGithubSquare /></a>
-                    <a target='_blank' rel='noopener norefferer' href='https://instagram.com/drstupidity21'><FaInstagramSquare/></a>
-                    <a target='_blank' rel='noopener norefferer' href='https://x.com/dasika47'><FaTwitterSquare /></a>
-                </div>
-            </motion.div>
-                }
-              
-
+                </motion.div> 
             </section> 
             <section
                 className="name-landing-div"
@@ -121,12 +77,25 @@ export default function Overlay () {
                     flexDirection: 'column',
                     maxWidth: '1024px',
                     minHeight: '100svh',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'center',
                     gap: '40px', 
                     padding : '32px',
                     margin : '0px auto'
                 }}>
                 <PreviousExperience />
+            </section>
+            <section
+                className="name-landing-div"
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    maxWidth: '1024px',
+                    justifyContent: 'flex-start',
+                    gap: '40px', 
+                    padding : '32px',
+                    margin : '0px auto'
+                }}>
+                <Projects />
             </section>
             <section 
              style={{
@@ -142,6 +111,8 @@ export default function Overlay () {
             >
                 <Contact />
             </section>
+
+            
         </>
     )
 }

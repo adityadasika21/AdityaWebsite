@@ -3,6 +3,7 @@ import Overlay from "../../assets/overlay";
 
 export default function Home () {
     
+
     return (
         <>
         <div style={{
@@ -18,8 +19,8 @@ export default function Home () {
             width: "100vw",
             minHeight: "100vh",
             zIndex: 5,
-            backdropFilter: "blur(10px)",  // Heavy blur effect
-            WebkitBackdropFilter: "blur(10px)", // Safari support
+            backdropFilter: "blur(4px)",  // Heavy blur effect
+            WebkitBackdropFilter: "blur(4px)", // Safari support
             overflow: "hidden"
         }}>
           
@@ -31,14 +32,11 @@ export default function Home () {
                 top: 0,
                 left: 0,
                 background: "url('https://www.transparenttextures.com/patterns/noisy.png'), rgba(0,0,0,0.1)",
-                mixBlendMode: "overlay",
-                opacity: 0.4,
-                animation: "noise 0.2s steps(2) infinite",
+                mixBlendMode: 'color-dodge',
+                opacity: 0.5,
                 pointerEvents : 'none'
             }} />
-                {/* <Header>    </Header> */}
-                    <Overlay />
-            
+                <Overlay />
             <style>
                 {`
                     @keyframes noise {
@@ -47,7 +45,6 @@ export default function Home () {
                     }
                 `}
             </style>
-      
         </div> 
         </>
     )
