@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface HeaderProps {
@@ -7,7 +7,6 @@ interface HeaderProps {
 }
 
 export default function Header({ children }: HeaderProps) {
-  const location = useLocation();
   const [activeLink, setActiveLink] = useState<string | null>(null);
 
   return (
