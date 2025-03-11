@@ -1,51 +1,49 @@
-import BackgroundScene from "../../assets/canvas";
-import Overlay from "../../assets/overlay";
+import { useMediaQuery } from "usehooks-ts";
+import { motion } from 'motion/react';
+import { getDownloadURL, ref } from "firebase/storage";
+import { FaLocationPin } from "react-icons/fa6";
+import { FaDownload } from "react-icons/fa";
+import PreviousExperience from "../../assets/overlay/components/prevexp";
+import Projects from "../projects";
+import Contact from "../../assets/overlay/components/contact";
 
 export default function Home () {
-    
+    const isSmallScreen = useMediaQuery('(max-width : 768px');
+
+    const handleDownload = async () => {
+        const pathReference = ref(storage , "gs://adityadasika21.firebasestorage.app/Aditya_Resume.pdf");
+        const url = await getDownloadURL(pathReference);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Aditya_Resume.pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a); 
+    }
 
     return (
-        <>
-        <div style={{
-            position : 'fixed', 
-            width : "100vw",
-            height : "100vh",
-            zIndex : -1
-        }}>
-            <BackgroundScene />
-        </div> 
-        <div style={{
-            position: 'absolute',
-            width: "100vw",
-            minHeight: "100vh",
-            zIndex: 5,
-            backdropFilter: "blur(4px)",  // Heavy blur effect
-            WebkitBackdropFilter: "blur(4px)", // Safari support
-            overflow: "hidden"
-        }}>
+        <>  
+            <section style={{ display : 'flex', flexDirection: 'column', maxWidth: '60rem', minHeight : '100vh',  justifyContent : 'flex-start', margin : '0px auto', paddingTop : '72px'}}>
           
-            <div style={{
-                content: "''",
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                top: 0,
-                left: 0,
-                background: "url('https://www.transparenttextures.com/patterns/noisy.png'), rgba(0,0,0,0.1)",
-                mixBlendMode: 'color-dodge',
-                opacity: 0.5,
-                pointerEvents : 'none'
-            }} />
-                <Overlay />
-            <style>
-                {`
-                    @keyframes noise {
-                        0% { background-position: 0 0; }
-                        100% { background-position: 100px 100px; }
-                    }
-                `}
-            </style>
-        </div> 
+                <div className="name-introduction"
+                    style={{ textAlign : "left", display : 'flex', 
+                    justifyContent : 'center', padding : '40px' ,gap : '40px', height : '400px', borderRadius : '20px', 
+                    flexDirection : 'row', outline :  '1px solid black', }}>
+                        <div style={{ width : '100%', height : '100%', 
+                         borderRadius : '25px', flex : 2}}>
+                            <h1 style={{ textTransform : 'capitalize', fontSize : '40px'}}>Aditya Dasika</h1>
+                            <p style={{ }}
+                            >
+                                A mid-level fullstack developer, experienced in building end-to-end systems with React, Tailwind for frontend and Firebase/AWS as backend. 
+
+                            </p>
+                        </div>
+                        <div style={{ width : '100%', height : '100%', borderRadius : '25px', flex : 1}}>
+
+                        </div>
+                </div>
+            </section> 
         </>
     )
 }
