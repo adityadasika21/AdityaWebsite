@@ -1,5 +1,4 @@
 import { useMediaQuery } from 'usehooks-ts';
-import HackerText from '../hackerText';
 import Contact from './components/contact';
 import PreviousExperience from './components/prevexp';
 import { motion } from 'motion/react'
@@ -25,7 +24,7 @@ export default function Overlay () {
             <section style={{ display : 'flex', flexDirection: 'column', maxWidth: '1024px', minHeight : '100vh',  justifyContent : 'center', margin : 'auto auto', gap: '100px'}}>
                 <div 
                     style={{ textAlign : "center", display : 'flex', justifyContent : 'center', gap : '0px', flexDirection : 'column', paddingTop: '64px' }}>
-                     <motion.h2 
+                    <motion.h2 
                         initial={{ y : -140, x : -40, opacity : 0 }}
                         animate={{ y : 0, x : 0, opacity : 1}}
                         transition={{ ease : 'easeInOut'}}
