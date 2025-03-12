@@ -25,7 +25,10 @@ export default function Overlay () {
             <section style={{ display : 'flex', flexDirection: 'column', maxWidth: '1024px', minHeight : '100vh',  justifyContent : 'center', margin : 'auto auto', gap: '100px'}}>
                 <div 
                     style={{ textAlign : "center", display : 'flex', justifyContent : 'center', gap : '0px', flexDirection : 'column', paddingTop: '64px' }}>
-                    <h2 
+                    <motion.h2 
+                        initial={{ y : -140, x : -40, opacity : 0 }}
+                        animate={{ y : 0, x : 0, opacity : 1}}
+                        transition={{ ease : 'easeInOut'}}
                         style={{ 
                             color : "#000", 
                             fontSize : isSmallScreen ? '80px' : "112px",
@@ -33,9 +36,10 @@ export default function Overlay () {
                             fontFamily : 'Anta'
                         }}
                         >
-                            <HackerText text='Aditya Dasika' time={60} />
-                    </h2>
-                    <p 
+                            Aditya Dasika
+                            
+                    </motion.h2>
+                    <motion.p 
                         className='aboutme-caption' 
                         style={{ 
                             fontSize: isSmallScreen ? '22px' : '32px', 
@@ -43,14 +47,14 @@ export default function Overlay () {
                             textTransform: 'uppercase', fontFamily : 'Anta' 
                         }}
                     >
-                        <HackerText text='Fullstack Engineer' time={50}/>
-                    </p>
+                        Fullstack Engineer
+                    </motion.p>
                 </div> 
                 <motion.div 
                     style={{ textAlign : 'center', gap : '8px', display : 'flex', flexDirection : 'column', justifyContent : 'center', alignItems : 'center'}}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: 'easeInOut', delay : 3 }}
+                    transition={{ duration: 0.5, ease: 'easeInOut', delay : 1 }}
                 >
                     <p style={{ padding : '4px 12px', backgroundColor: 'rgba(255,255,255,0.5)', width : 'fit-content', borderRadius : '400px'}}>Actively looking for a job</p>
                     <div 
