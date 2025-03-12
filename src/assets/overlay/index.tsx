@@ -22,7 +22,7 @@ export default function Overlay () {
     return (
         <>
             <section style={{ display : 'flex', flexDirection: 'column', maxWidth: '1024px', minHeight : '100vh',  justifyContent : 'center', margin : 'auto auto', gap: '100px'}}>
-                <div 
+                <div  
                     style={{ textAlign : "center", display : 'flex', justifyContent : 'center', gap : '0px', flexDirection : 'column', paddingTop: '64px' }}>
                     <motion.h2 
                         initial={{ y : -140, x : -40, opacity : 0 }}
