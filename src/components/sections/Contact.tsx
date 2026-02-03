@@ -55,7 +55,7 @@ export function Contact() {
         {/* CTA Cards */}
         <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-16">
           <motion.a
-            href="https://calendly.com/akhildasika47"
+            href="https://calendly.com/akhil-dasika47/30min"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 40 }}
