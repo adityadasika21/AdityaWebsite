@@ -1,4 +1,4 @@
-import { Database, MessageSquare, Plug, Users } from "lucide-react";
+import { Bot, Cpu, Network, FlaskConical } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export interface Service {
@@ -10,27 +10,27 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    id: "rag",
-    title: "RAG Systems",
-    description: "Document Q&A, knowledge bases, semantic search.",
-    icon: Database,
+    id: "conversational-ai",
+    title: "Conversational AI",
+    description: "Agentic LangGraph pipelines, multi-turn dialogue systems, intent recognition, and NLU.",
+    icon: Bot,
   },
   {
-    id: "chatbots",
-    title: "Chatbots & Agents",
-    description: "LangGraph workflows, multi-turn conversations, tool use.",
-    icon: MessageSquare,
+    id: "llm-finetuning",
+    title: "LLM Fine-Tuning",
+    description: "QLoRA, SFT, multi-task BERT training on AWS SageMaker with custom evaluation frameworks.",
+    icon: Cpu,
   },
   {
-    id: "llm-integration",
-    title: "LLM Integration",
-    description: "API integration, prompt engineering, evaluation pipelines.",
-    icon: Plug,
+    id: "graph-rag",
+    title: "Graph RAG & Knowledge Graphs",
+    description: "Neo4j knowledge graphs, Graph RAG pipelines, multi-hop traversal, and semantic search.",
+    icon: Network,
   },
   {
-    id: "consulting",
-    title: "Consulting",
-    description: "Architecture review, technical strategy, team training.",
-    icon: Users,
+    id: "scientific-ml",
+    title: "Scientific ML / PINNs",
+    description: "Physics-Informed Neural Networks solving PDEs — Heat, Burgers', Schrödinger equations.",
+    icon: FlaskConical,
   },
 ];

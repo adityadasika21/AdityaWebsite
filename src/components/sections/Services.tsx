@@ -43,8 +43,7 @@ export function Services() {
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-primary to-transparent mt-4" />
           <p className="text-muted-foreground mt-6 max-w-2xl">
-            I help companies build production-ready AI systems that deliver real
-            value.
+            Core expertise areas — from agentic AI pipelines and LLM fine-tuning to knowledge graphs and physics-informed neural networks.
           </p>
         </motion.div>
 
@@ -102,28 +101,28 @@ export function Services() {
             <div className="space-y-4">
               <div className="flex justify-between items-center py-3 border-b border-border">
                 <span className="text-muted-foreground font-mono text-sm">
-                  Hours/week
+                  Base
                 </span>
-                <span className="font-medium">15-20 hours</span>
+                <span className="font-medium">Hyderabad, India</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-border">
                 <span className="text-muted-foreground font-mono text-sm">
                   Timezone
                 </span>
-                <span className="font-medium">IST</span>
+                <span className="font-medium">IST (UTC+5:30)</span>
               </div>
               <div className="flex justify-between items-center py-3">
                 <span className="text-muted-foreground font-mono text-sm">
-                  Overlap
+                  Remote
                 </span>
-                <span className="font-medium">US/Europe flexible</span>
+                <span className="font-medium">Open — US/Europe overlap flexible</span>
               </div>
             </div>
             <div className="mt-6 p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                 <span className="text-sm text-green-400 font-mono">
-                  Currently accepting projects
+                  Actively exploring new full-time roles
                 </span>
               </div>
             </div>

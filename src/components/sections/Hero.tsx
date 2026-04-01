@@ -23,7 +23,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
             >
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-mono text-primary">Available for projects</span>
+              <span className="text-sm font-mono text-primary">Open to New Opportunities</span>
             </motion.div>
 
             <motion.h1
@@ -42,7 +42,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-xl sm:text-2xl text-muted-foreground font-mono mb-8"
             >
-              AI/LLM Engineer
+              AI/ML Engineer
             </motion.p>
 
             <motion.p
@@ -51,9 +51,9 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-lg text-foreground/80 mb-6 leading-relaxed max-w-lg"
             >
-              I build intelligent systems that actually work in production.
+              AI/ML Engineer building production conversational AI systems, LLM fine-tuning pipelines, and physics-informed neural networks.
               <span className="text-muted-foreground block mt-2">
-                RAG pipelines. Agentic workflows. LLM integrations.
+                LangGraph. QLoRA. Graph RAG. PINNs.
               </span>
             </motion.p>
 
@@ -66,12 +66,12 @@ export function Hero() {
               <p className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-green-500" />
                 <span className="text-foreground">Currently:</span>{" "}
-                Building AI at an HR Tech company (Fortune 500 clients)
+                AI/LLM Engineer — 12-node agentic conversational AI platform at an HR Tech company
               </p>
               <p className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-primary" />
-                <span className="text-foreground">Previously:</span>{" "}
-                87% → 97% NLU accuracy using multilingual transformers
+                <span className="text-foreground">Exploring:</span>{" "}
+                Scientific ML, Conversational AI, LLM Engineering roles
               </p>
             </motion.div>
 

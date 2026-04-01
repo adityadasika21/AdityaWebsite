@@ -4,17 +4,17 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 
 const techStack = {
-  "LLM Frameworks": ["LangChain", "LangGraph", "Hugging Face"],
-  "Vector DBs": ["FAISS", "ChromaDB", "FalkorDB"],
-  Backend: ["Python", "FastAPI", "Node.js"],
-  Infra: ["AWS SageMaker", "GCP", "Docker"],
+  "GenAI & NLP": ["LLM Fine-Tuning (QLoRA/SFT)", "RAG", "Graph RAG", "NLU/NER", "Prompt Engineering"],
+  "ML Frameworks": ["PyTorch", "Transformers (BERT/ModernBERT)", "LangGraph", "LangChain", "vLLM", "FAISS"],
+  "Backend & DBs": ["FastAPI", "Node.js", "PostgreSQL", "Neo4j", "Redis", "MongoDB"],
+  "Infra & Languages": ["AWS SageMaker", "Docker", "GitHub Actions", "Python", "TypeScript", "SQL"],
 };
 
 const stats = [
   { value: "97%", label: "NLU Accuracy" },
-  { value: "12+", label: "Languages" },
-  { value: "<200ms", label: "Latency" },
-  { value: "M+", label: "Interactions" },
+  { value: "3.5yr", label: "Experience" },
+  { value: "78%", label: "Test Coverage" },
+  { value: "12", label: "LangGraph Nodes" },
 ];
 
 export function About() {
@@ -47,20 +47,15 @@ export function About() {
             className="space-y-6"
           >
             <p className="text-xl leading-relaxed">
-              I'm an AI/ML Engineer who turns messy LLM requirements into{" "}
-              <span className="text-primary">production-ready systems</span>.
+              I'm an AI/ML Engineer architecting{" "}
+              <span className="text-primary">agentic conversational AI</span> at scale — and building physics-informed neural networks that most ML engineers can't.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              At my current company, I replaced a legacy NLU system with a modern
-              multilingual pipeline using mBERT, improving accuracy from 87% to
-              97% across 12+ languages. I've built agentic chatbots with
-              LangGraph, RAG pipelines with vector databases, and ML training
-              pipelines on AWS SageMaker.
+              At my current company I architect a 12-node LangGraph agentic platform, fine-tune LLMs (BERT, Qwen) on AWS SageMaker, and build Graph RAG pipelines for enterprise chatbot delivery. I also improved NLU accuracy from 87% to 97% and scaled automated test coverage from 7% to 78%.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              I care about{" "}
-              <span className="text-foreground">systems that ship</span>, not
-              just demos that impress.
+              Before ML, I spent 2.5 years as a full-stack engineer. My B.E. in Mechanical Engineering isn't a detour — it's a differentiator. My physics background lets me build{" "}
+              <span className="text-foreground">physics-informed neural networks</span> for real scientific problems.
             </p>
 
             {/* Stats */}
@@ -127,7 +122,7 @@ export function About() {
             >
               <span className="text-primary font-mono text-sm">→</span>{" "}
               <span className="text-muted-foreground">
-                Available for contract projects in AI/LLM development.
+                Actively exploring roles in Scientific ML, Conversational AI, and LLM Engineering.
               </span>
             </motion.p>
           </motion.div>
