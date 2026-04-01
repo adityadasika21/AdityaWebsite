@@ -4,6 +4,7 @@ import { projects } from "@/data/projects";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectModal } from "@/components/ProjectModal";
 import type { Project } from "@/data/projects";
+import { trackProjectView } from "@/lib/analytics";
 
 export function Work() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -40,7 +41,7 @@ export function Work() {
             <ProjectCard
               key={project.id}
               project={project}
-              onClick={() => setSelectedProject(project)}
+              onClick={() => { trackProjectView(project.id, project.title); setSelectedProject(project); }}
               index={index}
             />
           ))}

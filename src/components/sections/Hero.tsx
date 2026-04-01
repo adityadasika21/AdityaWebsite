@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Sparkles } from "lucide-react";
+import { trackCtaClick } from "@/lib/analytics";
 
 export function Hero() {
   const handleNavClick = (href: string) => {
@@ -83,7 +84,7 @@ export function Hero() {
             >
               <Button
                 size="lg"
-                onClick={() => handleNavClick("#work")}
+                onClick={() => { trackCtaClick("View My Work"); handleNavClick("#work"); }}
                 className="magnetic-btn group"
               >
                 View My Work
@@ -92,7 +93,7 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => handleNavClick("#contact")}
+                onClick={() => { trackCtaClick("Let's Talk"); handleNavClick("#contact"); }}
                 className="border-primary/50 hover:bg-primary/10 hover:text-primary"
               >
                 Let's Talk

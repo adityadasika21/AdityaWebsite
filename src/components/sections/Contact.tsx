@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Github, Linkedin, Twitter, Mail, Calendar, ArrowUpRight } from "lucide-react";
+import { trackContactClick, trackSocialClick } from "@/lib/analytics";
 
 const socialLinks = [
   {
@@ -58,6 +59,7 @@ export function Contact() {
             href="https://calendly.com/akhil-dasika47/30min"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackContactClick("calendly")}
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -78,6 +80,7 @@ export function Contact() {
 
           <motion.a
             href="mailto:akhil.dasika47@gmail.com"
+            onClick={() => trackContactClick("email")}
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -112,6 +115,7 @@ export function Contact() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSocialClick(link.label)}
                 className="group h-12 w-12 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:border-primary/50 transition-all duration-300"
                 whileHover={{ scale: 1.1, y: -2 }}
                 aria-label={link.label}

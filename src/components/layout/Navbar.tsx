@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { trackNavClick } from "@/lib/analytics";
 
 const navLinks = [
   { label: "About", href: "#about", num: "01" },
@@ -23,8 +24,9 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, label?: string) => {
     setIsOpen(false);
+    if (label) trackNavClick(label);
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -67,7 +69,7 @@ export function Navbar() {
               className="group text-sm text-muted-foreground hover:text-foreground transition-colors"
               onClick={(e) => {
                 e.preventDefault();
-                handleNavClick(link.href);
+                handleNavClick(link.href, link.label);
               }}
             >
               <span className="text-primary font-mono text-xs mr-1">{link.num}.</span>
@@ -93,7 +95,7 @@ export function Navbar() {
                   className="group text-lg text-muted-foreground hover:text-foreground transition-colors"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleNavClick(link.href);
+                    handleNavClick(link.href, link.label);
                   }}
                 >
                   <span className="text-primary font-mono text-sm mr-2">{link.num}.</span>
