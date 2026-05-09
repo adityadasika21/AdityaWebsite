@@ -1,0 +1,1359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>~/aditya — AI/ML Engineer</title>
+<meta name="description" content="AI/LLM Engineer. Production agentic pipelines, LLM fine-tuning, physics-informed neural networks." />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#0b0f14">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RD3KFYWP4K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RD3KFYWP4K', {
+    allow_google_signals: true,
+    allow_ad_personalization_signals: true,
+    send_page_view: true,
+    link_attribution: true,
+  });
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0b0f14;
+    --bg-2: #0f141b;
+    --bg-3: #131923;
+    --panel: #0d1219;
+    --line: #1a2230;
+    --line-2: #243044;
+    --text: #d8e1ec;
+    --text-dim: #7c8aa0;
+    --text-faint: #4a566a;
+    --accent: #00d4ff;
+    --accent-2: #7ee787;
+    --accent-3: #ffd166;
+    --accent-4: #ff7b9c;
+    --accent-5: #c792ea;
+    --kw: #ff7b9c;
+    --str: #7ee787;
+    --num: #ffd166;
+    --fn:  #00d4ff;
+    --com: #4a566a;
+    --var: #c792ea;
+
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+    --sans: "Geist", system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: #001017; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+  code { font-family: var(--mono); }
+
+  /* Syntax helpers */
+  .kw { color: var(--kw); }
+  .str { color: var(--str); }
+  .num { color: var(--num); }
+  .fn  { color: var(--fn); }
+  .com { color: var(--com); }
+  .var { color: var(--var); }
+  .punc { color: var(--text-dim); }
+
+  /* IDE shell */
+  .ide {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 38px 1fr 24px;
+    grid-template-areas:
+      "title title"
+      "sidebar editor"
+      "status status";
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Title bar */
+  .titlebar {
+    grid-area: title;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 12px;
+    color: var(--text-dim);
+    gap: 14px;
+    position: sticky; top: 0; z-index: 30;
+  }
+  .traffic { display: flex; gap: 8px; }
+  .traffic span { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .traffic .r { background: #ff5f57; }
+  .traffic .y { background: #febc2e; }
+  .traffic .g { background: #28c840; }
+  .titlebar .path { color: var(--text); }
+  .titlebar .path .accent { color: var(--accent); }
+  .titlebar .right { margin-left: auto; display: flex; gap: 14px; align-items: center; }
+  .otw {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 3px 10px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: rgba(126, 231, 135, 0.06);
+    font-size: 11px;
+    color: var(--text);
+  }
+  .otw .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 0 0 rgba(126,231,135,.5);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(126,231,135,.5); }
+    70% { box-shadow: 0 0 0 7px rgba(126,231,135,0); }
+    100% { box-shadow: 0 0 0 0 rgba(126,231,135,0); }
+  }
+  .titlebar .resume {
+    font-size: 11px; padding: 4px 10px;
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    color: var(--text);
+    transition: border-color .15s, background .15s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .titlebar .resume:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Sidebar */
+  .sidebar {
+    grid-area: sidebar;
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    overflow-y: auto;
+    font-size: 12.5px;
+    padding: 14px 0;
+    position: sticky;
+    top: 38px;
+    height: calc(100vh - 38px - 24px);
+  }
+  .sidebar-h {
+    padding: 4px 14px 10px;
+    color: var(--text-faint);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .tree { padding: 0 6px; }
+  .tree-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+  .tree-row:hover { background: var(--bg-3); color: var(--text); }
+  .tree-row.active { background: rgba(0, 212, 255, 0.08); color: var(--text); }
+  .tree-row.active .tname { color: var(--accent); }
+  .tree-row .ico { width: 13px; height: 13px; flex-shrink: 0; }
+  .tree-row.dir { color: var(--text); padding-left: 8px; }
+  .tree-row.file { padding-left: 24px; }
+  .tree-row.file.l3 { padding-left: 38px; }
+
+  .sidebar-divider { height: 1px; background: var(--line); margin: 12px 14px; }
+
+  /* Editor area */
+  .editor {
+    grid-area: editor;
+    overflow-y: auto;
+  }
+  .tab-bar {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    height: 34px;
+    overflow-x: auto;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .tab {
+    padding: 8px 14px;
+    border-right: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--text-dim);
+    display: inline-flex; align-items: center; gap: 8px;
+    cursor: pointer;
+    transition: background .12s, color .12s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); background: var(--bg-3); }
+  .tab.active { background: var(--bg); color: var(--text); border-bottom: 1px solid transparent; }
+  .tab .x { color: var(--text-faint); font-size: 11px; padding: 0 2px; border-radius: 2px; }
+  .tab.active .x:hover { color: var(--text); background: var(--line); }
+
+  /* Document layout */
+  .doc {
+    max-width: 980px;
+    padding: 36px clamp(20px, 5vw, 56px) 80px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 12px 0 36px;
+    border-bottom: 1px dashed var(--line-2);
+    margin-bottom: 36px;
+  }
+  .prompt {
+    color: var(--accent-2);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .prompt::before {
+    content: "$ ";
+    color: var(--accent);
+  }
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    margin: 0 0 18px;
+    color: var(--text);
+  }
+  .hero h1 .accent {
+    color: var(--accent);
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 0.85em;
+    vertical-align: 2px;
+  }
+  .hero .role-line {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+  }
+  .hero .role-line span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero .role-line .dot { width: 4px; height: 4px; background: var(--text-faint); border-radius: 50%; }
+
+  .tagline-block {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    font-family: var(--mono);
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .tagline-block .com { display: block; margin-bottom: 6px; }
+
+  .blurb {
+    font-family: var(--sans);
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    max-width: 60ch;
+    margin: 0 0 28px;
+  }
+  .blurb b { color: var(--text); font-weight: 500; }
+
+  .ctas {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    transition: background .12s, border-color .12s, color .12s, transform .12s;
+    color: var(--text);
+  }
+  .btn:hover { transform: translateY(-1px); border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,0.06); }
+  .btn-primary { background: var(--accent); color: #001017; border-color: var(--accent); }
+  .btn-primary:hover { background: #4be4ff; color: #001017; border-color: #4be4ff; }
+  .btn svg { width: 13px; height: 13px; }
+  .btn .key {
+    font-size: 10px;
+    color: var(--text-faint);
+    border: 1px solid var(--line-2);
+    padding: 0 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+  }
+  .btn-primary .key { color: rgba(0,16,23,0.6); border-color: rgba(0,16,23,0.3); }
+
+  /* Code-block / metric panels */
+  .code-card {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 18px 0;
+  }
+  .code-card .head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 14px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--line);
+    font-size: 11.5px;
+    color: var(--text-dim);
+  }
+  .code-card .head .lang { color: var(--accent); }
+  .code-card pre {
+    margin: 0;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .code-card .ln {
+    color: var(--text-faint);
+    user-select: none;
+    margin-right: 18px;
+    display: inline-block;
+    width: 18px;
+    text-align: right;
+  }
+
+  /* Section headings */
+  .h-section {
+    display: flex; align-items: baseline; gap: 14px;
+    margin: 56px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .h-section h2 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: clamp(24px, 3vw, 32px);
+    margin: 0;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .h-section h2 .accent { color: var(--accent); }
+  .h-section .meta {
+    margin-left: auto;
+    color: var(--text-faint);
+    font-size: 11px;
+  }
+  .h-section .com {
+    font-size: 13px;
+    color: var(--com);
+  }
+
+  /* Headline metrics block */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .metric {
+    background: var(--bg-2);
+    padding: 18px 18px;
+    cursor: help;
+    transition: background .15s;
+  }
+  .metric:hover { background: #131a25; }
+  .metric .v {
+    font-family: var(--mono);
+    font-size: clamp(26px, 3vw, 32px);
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .metric .v .arr { color: var(--text-dim); margin: 0 4px; font-weight: 400; }
+  .metric .v.green { color: var(--accent-2); }
+  .metric .v.yellow { color: var(--accent-3); }
+  .metric .v.purple { color: var(--accent-5); }
+  .metric .l {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+  .metric .reveal {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--text-faint);
+    opacity: 0;
+    transform: translateY(2px);
+    transition: opacity .2s, transform .2s;
+  }
+  .metric:hover .reveal { opacity: 1; transform: translateY(0); color: var(--text-dim); }
+  @media (max-width: 720px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Work entries */
+  .file-card {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .file-card .filehead {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 14px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--line);
+    font-size: 11.5px;
+    color: var(--text-dim);
+  }
+  .file-card .filehead .name { color: var(--text); }
+  .file-card .filehead .name .ext { color: var(--accent); }
+  .file-card .filehead .meta { color: var(--text-faint); }
+  .file-card .body { padding: 22px 22px 4px; }
+  .file-card h3 {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .file-card h3 .at { color: var(--text-dim); font-weight: 400; }
+  .file-card .role {
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .file-card p {
+    font-family: var(--sans);
+    font-size: 14.5px;
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0 0 14px;
+    max-width: 64ch;
+  }
+  .file-card p.dim { color: var(--text-dim); }
+
+  /* Tags / chips */
+  .stack { display: flex; flex-wrap: wrap; gap: 5px; padding: 14px 22px 22px; border-top: 1px dashed var(--line); }
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    padding: 3px 9px;
+    border-radius: 3px;
+    transition: border-color .15s, color .15s, background .15s;
+    cursor: default;
+  }
+  .tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,212,255,0.06);
+  }
+
+  /* Issues block — inline diff style */
+  .diff {
+    margin: 14px 22px 22px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .diff .dhead {
+    padding: 7px 14px;
+    background: var(--bg-3);
+    font-size: 11.5px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--line);
+  }
+  .diff-line {
+    padding: 6px 14px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--line);
+  }
+  .diff-line:last-child { border-bottom: none; }
+  .diff-line.minus { background: rgba(255,107,156,0.06); color: #ffb6cc; }
+  .diff-line.minus::before { content: "− "; color: var(--accent-4); }
+  .diff-line.plus { background: rgba(126,231,135,0.05); color: #c2f5cd; }
+  .diff-line.plus::before { content: "+ "; color: var(--accent-2); }
+
+  /* Projects */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .project {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .15s, transform .15s;
+    position: relative;
+  }
+  .project:hover { border-color: var(--line-2); transform: translateY(-2px); }
+  .project .phead {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 14px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--line);
+    font-size: 11.5px;
+    color: var(--text-dim);
+  }
+  .project .phead .pname { color: var(--text); }
+  .project .pbody { padding: 18px 18px 12px; flex: 1; display: flex; flex-direction: column; }
+  .project h3 {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    letter-spacing: -0.005em;
+  }
+  .project .psub {
+    font-size: 11.5px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .project p {
+    font-family: var(--sans);
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0 0 16px;
+  }
+  .project .pmetrics {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+  }
+  .project .pmetrics .v {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .project .pmetrics .v.yellow { color: var(--accent-3); }
+  .project .pmetrics .v.green  { color: var(--accent-2); }
+  .project .pmetrics .v.purple { color: var(--accent-5); }
+  .project .pmetrics .l {
+    font-size: 10.5px;
+    color: var(--text-faint);
+    margin-top: 4px;
+  }
+  .project .pstack { padding: 12px 18px 14px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 5px; }
+
+  .equation-reveal {
+    position: absolute;
+    bottom: 0; right: 0;
+    background: var(--bg-3);
+    color: var(--accent);
+    padding: 6px 12px;
+    font-size: 12px;
+    border-top-left-radius: 6px;
+    border-top: 1px solid var(--line-2);
+    border-left: 1px solid var(--line-2);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity .2s, transform .2s;
+    pointer-events: none;
+  }
+  .project:hover .equation-reveal { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 820px) { .projects { grid-template-columns: 1fr; } }
+
+  /* Skills as JS object */
+  .skills-block {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .skills-block .head {
+    padding: 8px 14px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--line);
+    font-size: 11.5px;
+    color: var(--text-dim);
+    display: flex; justify-content: space-between;
+  }
+  .skills-block pre {
+    margin: 0;
+    padding: 18px 22px;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--text);
+    overflow-x: auto;
+  }
+
+  /* Contact */
+  .contact-block {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 32px;
+    margin-top: 24px;
+  }
+  .contact-block h2 {
+    font-family: var(--sans);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    line-height: 1.05;
+  }
+  .contact-block .accent { color: var(--accent); }
+  .contact-block .com { font-size: 13px; color: var(--com); margin-bottom: 22px; }
+  .contact-list {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .contact-list a {
+    background: var(--bg-2);
+    padding: 16px 18px;
+    transition: background .15s;
+    font-size: 13px;
+  }
+  .contact-list a:hover { background: var(--bg-3); }
+  .contact-list a:hover .v { color: var(--accent); }
+  .contact-list a .l { font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .contact-list a .v { color: var(--text); font-size: 14px; }
+  @media (max-width: 720px) { .contact-list { grid-template-columns: 1fr; } }
+
+  /* Status bar */
+  .statusbar {
+    grid-area: status;
+    background: var(--accent);
+    color: #001017;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 11px;
+    gap: 18px;
+    font-weight: 500;
+  }
+  .statusbar .right { margin-left: auto; display: flex; gap: 18px; }
+  .statusbar .seg { display: inline-flex; align-items: center; gap: 5px; }
+
+  /* Variant switcher */
+  .variant-switch {
+    position: fixed;
+    bottom: 14px;
+    right: 14px;
+    z-index: 100;
+    display: flex;
+    gap: 4px;
+    background: rgba(15, 20, 28, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    padding: 3px;
+    font-size: 11px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .variant-switch a {
+    padding: 4px 10px;
+    border-radius: 3px;
+    color: var(--text-dim);
+    transition: color .15s, background .15s;
+  }
+  .variant-switch a.active { background: var(--accent); color: #001017; }
+  .variant-switch a:not(.active):hover { color: var(--text); }
+
+  /* Mobile */
+  @media (max-width: 760px) {
+    .ide { grid-template-columns: 1fr; grid-template-areas: "title" "editor" "status"; }
+    .sidebar { display: none; }
+  }
+
+  /* Background */
+  #pinn-bg-canvas { mix-blend-mode: screen; }
+
+  /* ---------- Comprehensive responsive ---------- */
+  @media (max-width: 960px) {
+    .ide { grid-template-columns: 200px 1fr; }
+    .doc { padding: 28px clamp(20px, 4vw, 40px) 64px; }
+    .titlebar .otw { font-size: 10px; padding: 3px 8px; }
+    .file-card .body { padding: 18px 18px 4px; }
+    .stack { padding: 12px 18px 18px; }
+    .diff { margin: 12px 18px 18px; }
+    .projects { gap: 12px; }
+  }
+
+  @media (max-width: 760px) {
+    .ide {
+      grid-template-columns: 1fr;
+      grid-template-areas: "title" "editor" "status";
+      grid-template-rows: auto 1fr auto;
+    }
+    .sidebar { display: none; }
+    .titlebar { padding: 0 12px; gap: 10px; height: auto; min-height: 38px; flex-wrap: wrap; }
+    .titlebar .path { font-size: 11px; max-width: 60vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .titlebar .right { gap: 8px; }
+    .variant-switch { bottom: 28px; right: 12px; }
+
+    .doc { padding: 22px 18px 56px; }
+
+    .tab-bar { height: 32px; }
+    .tab { padding: 7px 12px; font-size: 11.5px; }
+
+    .hero h1 { font-size: clamp(40px, 11vw, 64px); margin-bottom: 14px; }
+    .hero .role-line { gap: 10px; row-gap: 6px; font-size: 11.5px; margin-bottom: 22px; }
+    .hero .role-line .dot { display: none; }
+    .tagline-block { padding: 14px 16px; font-size: 13px; line-height: 1.65; }
+    .blurb { font-size: 14.5px; margin-bottom: 22px; }
+    .ctas { gap: 6px; }
+    .btn { padding: 8px 12px; font-size: 11.5px; }
+    .btn .key { display: none; }
+
+    .h-section { margin: 40px 0 16px; gap: 10px; flex-wrap: wrap; }
+    .h-section h2 { font-size: 22px; }
+    .h-section .meta { font-size: 10.5px; margin-left: 0; flex-basis: 100%; }
+
+    .metrics-grid { margin: 22px 0 0; }
+    .metric { padding: 14px 14px; }
+    .metric .v { font-size: 22px; }
+    .metric .l { font-size: 10px; margin-top: 6px; }
+    .metric .reveal { display: none; }
+
+    .code-card pre { padding: 14px 16px; font-size: 12px; }
+    .code-card .ln { margin-right: 12px; width: 16px; }
+
+    .file-card h3 { font-size: 19px; }
+    .file-card .role { font-size: 11.5px; margin-bottom: 12px; }
+    .file-card p { font-size: 13.5px; }
+    .file-card .body { padding: 16px 16px 4px; }
+    .file-card .filehead { padding: 8px 12px; font-size: 10.5px; flex-wrap: wrap; gap: 4px; }
+    .file-card .filehead .meta { width: 100%; }
+    .stack { padding: 12px 16px 16px; gap: 4px; }
+    .tag { font-size: 10.5px; padding: 3px 8px; }
+    .diff { margin: 12px 16px 16px; }
+    .diff .dhead { padding: 6px 12px; font-size: 10.5px; }
+    .diff-line { padding: 6px 12px; font-size: 11.5px; }
+
+    .project .pbody { padding: 14px 14px 10px; }
+    .project h3 { font-size: 16.5px; }
+    .project .psub { font-size: 11px; margin-bottom: 12px; }
+    .project p { font-size: 13px; }
+    .project .pmetrics { gap: 8px; }
+    .project .pmetrics .v { font-size: 13px; }
+    .project .pmetrics .l { font-size: 10px; }
+    .project .pstack { padding: 10px 14px 12px; }
+    .equation-reveal { display: none; }
+
+    .skills-block pre { padding: 14px 16px; font-size: 11.5px; line-height: 1.7; white-space: pre; overflow-x: auto; }
+
+    .contact-block { padding: 22px 18px; }
+    .contact-block h2 { font-size: 28px; }
+    .contact-list a { padding: 14px 16px; }
+    .contact-list a .v { font-size: 13px; word-break: break-word; }
+
+    .statusbar {
+      flex-wrap: wrap;
+      padding: 6px 12px;
+      gap: 10px;
+      font-size: 10px;
+      min-height: 24px;
+      height: auto;
+    }
+    .statusbar .right { gap: 10px; }
+    .statusbar .seg:nth-child(2),
+    .statusbar .seg:nth-child(3),
+    .statusbar .right .seg:nth-child(1),
+    .statusbar .right .seg:nth-child(3) { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .titlebar .otw { display: none; }
+    .titlebar .path { font-size: 10.5px; max-width: 50vw; }
+    .titlebar .resume { font-size: 10px; padding: 3px 8px; }
+    .traffic { display: none; }
+
+    .hero h1 { font-size: clamp(36px, 11vw, 56px); }
+    .ctas .btn { width: 100%; justify-content: center; padding: 10px 12px; }
+    .ctas .btn[href^="mailto"] { font-size: 11px; word-break: break-all; }
+
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
+    .contact-block h2 { font-size: 24px; }
+    .h-section h2 { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="variant-switch" aria-label="Variants">
+  <a href="editorial.html">editorial</a>
+  <a href="terminal.html" class="active">terminal</a>
+</nav>
+
+<div class="ide">
+
+  <!-- Title bar -->
+  <header class="titlebar">
+    <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+    <div class="path">~/<span class="accent">aditya-dasika</span> — projectindex.online</div>
+    <div class="right">
+      <span class="otw"><span class="dot"></span>open to AI/ML roles</span>
+      <a class="resume" href="Aditya_Dasika_Resume.pdf" download="Aditya_Dasika_Resume.pdf" style="background: var(--accent); color: #001017; border-color: var(--accent); font-weight: 600;">
+        <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9m0 0l-3-3m3 3l3-3M3 13h10"/></svg>
+        download resume.pdf
+      </a>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" aria-label="File tree">
+    <div class="sidebar-h">Explorer</div>
+    <div class="tree">
+      <div class="tree-row dir"><span class="ico">▾</span><span class="tname" style="color:var(--accent-3)">aditya-dasika/</span></div>
+
+      <a href="#about" class="tree-row file" data-jump="about">
+        <span class="ico" style="color:var(--accent-2)">●</span>
+        <span class="tname">about.md</span>
+      </a>
+
+      <div class="tree-row dir" style="padding-left: 8px;"><span class="ico">▾</span><span class="tname" style="color:var(--accent-3)">work/</span></div>
+      <a href="#phenom" class="tree-row file l3" data-jump="phenom">
+        <span class="ico" style="color:var(--accent)">▸</span>
+        <span class="tname">phenom.py</span>
+      </a>
+      <a href="#blueleaves" class="tree-row file l3" data-jump="blueleaves">
+        <span class="ico" style="color:var(--accent)">▸</span>
+        <span class="tname">blueleaves.tsx</span>
+      </a>
+
+      <div class="tree-row dir" style="padding-left: 8px;"><span class="ico">▾</span><span class="tname" style="color:var(--accent-3)">projects/</span></div>
+      <a href="#pinns" class="tree-row file l3" data-jump="pinns">
+        <span class="ico" style="color:var(--accent-5)">∂</span>
+        <span class="tname">pinns.ipynb</span>
+      </a>
+      <a href="#gpt" class="tree-row file l3" data-jump="gpt">
+        <span class="ico" style="color:var(--accent-5)">∂</span>
+        <span class="tname">karpathy-gpt.py</span>
+      </a>
+      <a href="#mmbert" class="tree-row file l3" data-jump="mmbert">
+        <span class="ico" style="color:var(--accent-5)">∂</span>
+        <span class="tname">mmbert.py</span>
+      </a>
+      <a href="#indexnotes" class="tree-row file l3" data-jump="indexnotes">
+        <span class="ico" style="color:var(--accent-5)">∂</span>
+        <span class="tname">indexnotes.cypher</span>
+      </a>
+
+      <a href="#skills" class="tree-row file" data-jump="skills">
+        <span class="ico" style="color:var(--accent-2)">{ }</span>
+        <span class="tname">skills.json</span>
+      </a>
+      <a href="#contact" class="tree-row file" data-jump="contact">
+        <span class="ico" style="color:var(--accent-2)">@</span>
+        <span class="tname">contact.txt</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-h">Outline</div>
+      <div class="tree">
+        <a href="#hero" class="tree-row file" style="padding-left:14px;"><span class="ico" style="color:var(--accent-3)">#</span><span class="tname">aditya dasika</span></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Editor -->
+  <main class="editor" id="top">
+
+    <div class="tab-bar">
+      <div class="tab active">
+        <span style="color:var(--accent-2)">●</span>
+        portfolio.md
+        <span class="x">×</span>
+      </div>
+      <div class="tab" onclick="window.location='editorial.html'">
+        <span style="color:var(--text-faint)">○</span>
+        editorial.html
+        <span class="x">×</span>
+      </div>
+    </div>
+
+    <div class="doc">
+
+      <!-- Hero -->
+      <section class="hero" id="hero">
+        <div class="prompt">whoami</div>
+        <h1>Aditya Dasika<span class="accent">_</span></h1>
+        <div class="role-line">
+          <span><span class="kw">role</span>: AI/LLM Engineer</span>
+          <span class="dot"></span>
+          <span><span class="kw">at</span>: Phenom People</span>
+          <span class="dot"></span>
+          <span><span class="kw">loc</span>: Hyderabad, IN</span>
+          <span class="dot"></span>
+          <span><span class="kw">exp</span>: 4 yrs</span>
+        </div>
+
+        <div class="tagline-block">
+          <span class="com">// tagline</span>
+          Building <span class="fn">production AI systems</span> — from <span class="str">"LLM fine-tuning"</span> to <span class="str">"physics-informed neural networks"</span>.
+        </div>
+
+        <p class="blurb">
+          I architect <b>agentic conversational pipelines</b>, fine-tune LLMs at scale on AWS, and build Graph RAG systems for enterprise. On the side I implement <b>PINNs from scratch</b> in PyTorch — heat, Burgers', Schrödinger.
+          Mechanical engineering by training, self-taught into production ML.
+        </p>
+
+        <div class="ctas">
+          <a class="btn btn-primary" href="mailto:akhil.dasika47@gmail.com">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 4l6 5 6-5"/></svg>
+            akhil.dasika47@gmail.com
+            <span class="key">⏎</span>
+          </a>
+          <a class="btn" href="https://github.com/adityadasika21" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 00-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.22.48-2.69-1.07-2.69-1.07-.36-.93-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.81.06 1.23.83 1.23.83.71 1.23 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.22 2.2.82a7.6 7.6 0 014 0c1.53-1.04 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.52.56.83 1.28.83 2.15 0 3.07-1.87 3.74-3.65 3.94.29.25.54.74.54 1.49v2.21c0 .22.14.46.55.38A8 8 0 008 0z"/></svg>
+            github.com/adityadasika21
+          </a>
+          <a class="btn" href="https://linkedin.com/in/adityadasika21" target="_blank" rel="noopener">
+            linkedin/in/adityadasika21
+          </a>
+          <a class="btn" href="Aditya_Dasika_Resume.pdf" download="Aditya_Dasika_Resume.pdf" style="background: rgba(0,212,255,0.08); border-color: var(--accent); color: var(--accent);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9m0 0l-3-3m3 3l3-3M3 13h10"/></svg>
+            download resume.pdf
+            <span class="key" style="border-color: var(--accent); color: var(--accent);">⌘D</span>
+          </a>
+        </div>
+
+        <!-- Headline metrics -->
+        <div class="metrics-grid" style="margin-top: 32px;">
+          <div class="metric">
+            <div class="v">97<span style="font-size:0.55em;">%</span></div>
+            <div class="l">// nlu accuracy</div>
+            <div class="reveal">87% → 97% via mt-bert</div>
+          </div>
+          <div class="metric">
+            <div class="v green">5.72<span style="font-size:0.55em; color:var(--text-dim);"> rps</span></div>
+            <div class="l">// prod throughput</div>
+            <div class="reveal">qwen3.5-2b on g5.xlarge</div>
+          </div>
+          <div class="metric">
+            <div class="v yellow">98.6<span style="font-size:0.55em; color:var(--text-dim);">%</span></div>
+            <div class="l">// success rate</div>
+            <div class="reveal">at peak load</div>
+          </div>
+          <div class="metric">
+            <div class="v purple">10k<span style="font-size:0.55em; color:var(--text-dim);">+</span></div>
+            <div class="l">// monthly txns</div>
+            <div class="reveal">blueleaves pos · live</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <div class="h-section" id="about">
+        <h2><span class="accent">$</span> cat about.md</h2>
+        <span class="meta">25 lines · markdown</span>
+      </div>
+
+      <div class="code-card">
+        <div class="head"><span>about.md</span><span class="lang">markdown</span></div>
+<pre><span class="ln">1</span><span class="kw"># </span><span style="color:var(--text)">aditya dasika</span>
+<span class="ln">2</span>
+<span class="ln">3</span><span class="com">> AI/LLM engineer at Phenom People. I architect</span>
+<span class="ln">4</span><span class="com">> 12-node LangGraph agentic pipelines, fine-tune</span>
+<span class="ln">5</span><span class="com">> LLMs at scale on AWS, and build Graph RAG systems.</span>
+<span class="ln">6</span>
+<span class="ln">7</span><span class="com">> On the side I implement physics-informed neural</span>
+<span class="ln">8</span><span class="com">> networks from scratch in PyTorch — heat, Burgers',</span>
+<span class="ln">9</span><span class="com">> Schrödinger.</span>
+<span class="ln">10</span>
+<span class="ln">11</span><span class="com">> Mechanical engineering by training, self-taught</span>
+<span class="ln">12</span><span class="com">> into production ML — I think about AI systems</span>
+<span class="ln">13</span><span class="com">> differently because I came in through physics,</span>
+<span class="ln">14</span><span class="com">> not through web apps.</span>
+<span class="ln">15</span>
+<span class="ln">16</span><span class="kw">## </span>vitals
+<span class="ln">17</span>- <span class="var">based</span>: <span class="str">"Hyderabad, IN"</span>
+<span class="ln">18</span>- <span class="var">role</span>:  <span class="str">"AI / LLM Engineer @ Phenom People"</span>
+<span class="ln">19</span>- <span class="var">since</span>: <span class="str">"April 2025"</span>
+<span class="ln">20</span>- <span class="var">prior</span>: <span class="str">"Full-stack @ Blueleaves Farms · 2.5 yrs"</span>
+<span class="ln">21</span>- <span class="var">edu</span>:   <span class="str">"B.E. Mechanical → self-taught ML"</span>
+<span class="ln">22</span>- <span class="var">stack</span>: <span class="str">"LangGraph · PyTorch · vLLM · AWS"</span>
+<span class="ln">23</span>- <span class="var">status</span>: <span class="str">"open to AI/ML engineering roles"</span>
+<span class="ln">24</span>- <span class="var">resume</span>: <a href="Aditya_Dasika_Resume.pdf" download="Aditya_Dasika_Resume.pdf" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;"><span class="str">"Aditya_Dasika_Resume.pdf"</span> ↓</a>
+</pre>
+      </div>
+
+      <!-- Work -->
+      <div class="h-section">
+        <h2><span class="accent">$</span> ls -la work/</h2>
+        <span class="meta">2 entries</span>
+      </div>
+
+      <!-- Phenom -->
+      <article class="file-card" id="phenom">
+        <div class="filehead">
+          <span class="name">phenom<span class="ext">.py</span></span>
+          <span class="meta">apr 2025 → present · hyderabad · enterprise hr-tech</span>
+        </div>
+        <div class="body">
+          <h3>Phenom People <span class="at">/ AI · LLM Engineer</span></h3>
+          <div class="role">chatbotCXAgent · 12-node LangGraph pipeline</div>
+          <p>
+            Architecting an enterprise conversational AI: 12-node LangGraph pipeline with discrete owners — Concierge, Intent Classifier, Dialogue Manager, NLG, CTC, and seven more. QLoRA fine-tuned Qwen3.5-2B on 4,569 production records, deployed to vLLM on AWS EC2 g5.xlarge.
+          </p>
+          <p class="dim">
+            Built the eval framework end-to-end (pass@k, GPT-4.1-mini judge rubrics across all 12 nodes) and lifted intent accuracy from 87% to 97% with a multi-task fine-tuned ModernBERT (intent + NER, joint heads). Graph RAG pipelines on FalkorDB for structured retrieval.
+          </p>
+
+          <div class="metrics-grid" style="margin: 8px 0 8px;">
+            <div class="metric">
+              <div class="v">87<span style="color:var(--text-dim);"> → </span>97<span style="font-size:0.55em;">%</span></div>
+              <div class="l">// nlu accuracy</div>
+              <div class="reveal">multi-task ModernBERT (intent + BIO NER)</div>
+            </div>
+            <div class="metric">
+              <div class="v green">5.72 <span style="font-size:0.55em; color:var(--text-dim)">rps</span></div>
+              <div class="l">// load tested</div>
+              <div class="reveal">qlora qwen3.5-2b · vllm · g5.xlarge</div>
+            </div>
+            <div class="metric">
+              <div class="v yellow">98.6<span style="font-size:0.55em;">%</span></div>
+              <div class="l">// success rate</div>
+              <div class="reveal">at peak rps · mixed traffic</div>
+            </div>
+            <div class="metric">
+              <div class="v purple">7<span style="color:var(--text-dim);"> → </span>78<span style="font-size:0.55em;">%</span></div>
+              <div class="l">// test coverage</div>
+              <div class="reveal">unit + node + llm-judge</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="diff">
+          <div class="dhead">// production debugging — 3 i'm proud of</div>
+          <div class="diff-line minus">parallel tool calls in agent loop generated spurious params</div>
+          <div class="diff-line plus">isolated invocation context per branch · pipeline stable</div>
+          <div class="diff-line minus">JSON schema $ref recursive loops crashed certain payloads</div>
+          <div class="diff-line plus">flattened schemas at boundary · zero crash since</div>
+          <div class="diff-line minus">vLLM + Qwen mamba+attention hybrid: undocumented at the time</div>
+          <div class="diff-line plus">merged weights + --enforce-eager · shipped to prod</div>
+        </div>
+
+        <div class="stack">
+          <span class="tag">LangGraph</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Redis</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">FAISS</span>
+          <span class="tag">FalkorDB</span>
+          <span class="tag">ModernBERT</span>
+          <span class="tag">Qwen3.5-2B</span>
+          <span class="tag">vLLM</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">Langfuse</span>
+          <span class="tag">Kafka</span>
+          <span class="tag">Unsloth</span>
+          <span class="tag">QLoRA / NF4</span>
+          <span class="tag">AWS EC2 g5.xlarge</span>
+          <span class="tag">SageMaker</span>
+        </div>
+      </article>
+
+      <!-- Blueleaves -->
+      <article class="file-card" id="blueleaves">
+        <div class="filehead">
+          <span class="name">blueleaves<span class="ext">.tsx</span></span>
+          <span class="meta">sep 2022 → feb 2025 · sole developer</span>
+        </div>
+        <div class="body">
+          <h3>Blueleaves Farms <span class="at">/ Full-stack Engineer</span></h3>
+          <div class="role">POS system · 5 locations · 2 brands · web + mobile</div>
+          <p>
+            Sole developer, end-to-end. Multi-location POS from scratch — billing &amp; checkout, SKU-grouped inventory (variants collapsed into single SKUs), cash handling, Razorpay payments, thermal receipt printing, role-based accounts for 20 staff, and a React Native mobile POS variant.
+          </p>
+          <p class="dim">
+            Owned the schema, the React + MUI web app, the Expo mobile app, the Python Cloud Functions backend on GCP, and the on-site network and hardware setup at all 5 locations. 3-hour solo SLA — no escalation path. 2 years live.
+          </p>
+          <div class="metrics-grid" style="margin: 8px 0 8px;">
+            <div class="metric">
+              <div class="v">10k<span style="font-size:0.55em; color:var(--text-dim)">+</span></div>
+              <div class="l">// monthly txns</div>
+              <div class="reveal">2 yrs in prod</div>
+            </div>
+            <div class="metric">
+              <div class="v green">200<span style="font-size:0.55em; color:var(--text-dim)">+</span></div>
+              <div class="l">// daily peak orders</div>
+              <div class="reveal">concurrent across locations</div>
+            </div>
+            <div class="metric">
+              <div class="v yellow">5</div>
+              <div class="l">// city locations</div>
+              <div class="reveal">multi-location stock sync</div>
+            </div>
+            <div class="metric">
+              <div class="v purple">20</div>
+              <div class="l">// staff accounts</div>
+              <div class="reveal">rbac · cashier / admin</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="diff">
+          <div class="dhead">// scope i owned, top to bottom</div>
+          <div class="diff-line plus">product: billing/checkout · SKU-grouped inventory · cash handling · Razorpay · thermal receipts · rbac (20 staff)</div>
+          <div class="diff-line plus">reach: react + MUI web · react native + expo mobile · multi-location stock (5 cities) · 2 brand catalogs (30 SKUs)</div>
+          <div class="diff-line plus">platform: schema · firestore + auth + hosting · python cloud functions on GCP · on-site network &amp; hardware setup</div>
+          <div class="diff-line plus">solo on-call: 3-hour SLA · no escalation path · 2 years live, still running</div>
+        </div>
+
+        <div class="stack">
+          <span class="tag">React</span>
+          <span class="tag">Material UI</span>
+          <span class="tag">React Native</span>
+          <span class="tag">Expo</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">Firestore</span>
+          <span class="tag">Firebase Auth</span>
+          <span class="tag">Cloud Functions (Python)</span>
+          <span class="tag">GCP</span>
+          <span class="tag">Razorpay SDK</span>
+          <span class="tag">thermal printer SDK</span>
+          <span class="tag">Photoshop</span>
+          <span class="tag">Blender</span>
+          <span class="tag">on-site sysadmin</span>
+        </div>
+      </article>
+
+      <!-- Projects -->
+      <div class="h-section">
+        <h2><span class="accent">$</span> ls projects/</h2>
+        <span class="meta">4 entries · hover to reveal core idea</span>
+      </div>
+
+      <div class="projects">
+        <article class="project" id="pinns">
+          <div class="phead"><span class="pname">pinns<span style="color:var(--accent)">.ipynb</span></span><span>P/01</span></div>
+          <div class="pbody">
+            <h3>Physics-Informed Neural Networks</h3>
+            <div class="psub">PyTorch · from scratch · 3 PDEs</div>
+            <p>Implemented automatic differentiation for physics residuals — no PDE-specific frameworks. Heat, Burgers', Schrödinger. Two-phase optimization (Adam → L-BFGS), complex-valued nets where the physics demands it.</p>
+            <div class="pmetrics">
+              <div><div class="v">~3<span style="font-size:0.7em">%</span></div><div class="l">heat eq. err</div></div>
+              <div><div class="v green" style="font-size:13px;">Raissi parity</div><div class="l">burgers'</div></div>
+              <div><div class="v yellow">8.3e-5</div><div class="l">schrödinger</div></div>
+            </div>
+          </div>
+          <div class="pstack">
+            <span class="tag">PyTorch</span>
+            <span class="tag">autograd</span>
+            <span class="tag">L-BFGS</span>
+            <span class="tag">complex nets</span>
+          </div>
+          <div class="equation-reveal">∂u/∂t = α · ∂²u/∂x²</div>
+        </article>
+
+        <article class="project" id="gpt">
+          <div class="phead"><span class="pname">karpathy-gpt<span style="color:var(--accent)">.py</span></span><span>P/02</span></div>
+          <div class="pbody">
+            <h3>Karpathy GPT — from scratch</h3>
+            <div class="psub">transformer · autograd · 5k steps</div>
+            <p>Full transformer, no shortcuts. Q/K/V projections, q @ k.T, the actual VJP graph through create_graph, LayerNorm, teacher forcing. The point wasn't to ship — it was to internalize.</p>
+            <div class="pmetrics">
+              <div><div class="v">4.39 → 1.86</div><div class="l">loss</div></div>
+              <div><div class="v green">5,000</div><div class="l">steps</div></div>
+              <div><div class="v yellow" style="font-size:13px;">tinyshake</div><div class="l">corpus</div></div>
+            </div>
+          </div>
+          <div class="pstack">
+            <span class="tag">PyTorch</span>
+            <span class="tag">multi-head attention</span>
+            <span class="tag">VJPs</span>
+            <span class="tag">teacher forcing</span>
+          </div>
+          <div class="equation-reveal">attn(Q,K,V) = softmax(QKᵀ/√d)·V</div>
+        </article>
+
+        <article class="project" id="mmbert">
+          <div class="phead"><span class="pname">mmbert<span style="color:var(--accent)">.py</span></span><span>P/03</span></div>
+          <div class="pbody">
+            <h3>mmBERT — multi-task NLP</h3>
+            <div class="psub">ModernBERT · 2 task heads · uncertainty weighting</div>
+            <p>ModernBERT backbone, two heads: 4-class intent + BIO NER. Uncertainty-weighted loss (Kendall et al.). Diagnosed validation loss divergence — fixed with differential learning rates, stratified splits, label smoothing.</p>
+            <div class="pmetrics">
+              <div><div class="v" style="font-size:13px;">intent + NER</div><div class="l">heads</div></div>
+              <div><div class="v green" style="font-size:13px;">σ-weighted</div><div class="l">loss</div></div>
+              <div><div class="v purple" style="font-size:13px;">prod</div><div class="l">candidate</div></div>
+            </div>
+          </div>
+          <div class="pstack">
+            <span class="tag">ModernBERT</span>
+            <span class="tag">multi-task</span>
+            <span class="tag">HuggingFace PEFT</span>
+            <span class="tag">label smoothing</span>
+          </div>
+          <div class="equation-reveal">L = Σᵢ (1/2σᵢ²)·Lᵢ + log σᵢ</div>
+        </article>
+
+        <article class="project" id="indexnotes">
+          <div class="phead"><span class="pname">indexnotes<span style="color:var(--accent)">.cypher</span></span><span>P/04</span></div>
+          <div class="pbody">
+            <h3>IndexNotes — paper knowledge graph</h3>
+            <div class="psub">Neo4j · Ollama · PDF → graph</div>
+            <p>Reading a paper isn't enough — I wanted to see how ideas connect. Neo4j-backed concept graph: ~40 concepts, 17+ relationships across three papers (Uni-HamGNN, PINN Part I &amp; II). PDF in, structured graph out.</p>
+            <div class="pmetrics">
+              <div><div class="v">~40</div><div class="l">concepts</div></div>
+              <div><div class="v green">17+</div><div class="l">relations</div></div>
+              <div><div class="v yellow">3</div><div class="l">papers</div></div>
+            </div>
+          </div>
+          <div class="pstack">
+            <span class="tag">Neo4j</span>
+            <span class="tag">Ollama</span>
+            <span class="tag">PDF parsing</span>
+            <span class="tag">graph schema</span>
+          </div>
+          <div class="equation-reveal">G = (V_concepts, E_relations)</div>
+        </article>
+      </div>
+
+      <!-- Skills -->
+      <div class="h-section" id="skills">
+        <h2><span class="accent">$</span> cat skills.json</h2>
+        <span class="meta">4 clusters · hover any value</span>
+      </div>
+
+      <div class="skills-block">
+        <div class="head"><span>skills.json</span><span class="lang">json</span></div>
+<pre><span class="punc">{</span>
+  <span class="str">"llm_genai"</span><span class="punc">:</span> <span class="punc">[</span>
+    <span class="str">"LangGraph"</span><span class="punc">,</span> <span class="str">"LangChain"</span><span class="punc">,</span> <span class="str">"RAG"</span><span class="punc">,</span> <span class="str">"Graph RAG"</span><span class="punc">,</span>
+    <span class="str">"QLoRA fine-tuning"</span><span class="punc">,</span> <span class="str">"vLLM"</span><span class="punc">,</span> <span class="str">"LLM deployment"</span><span class="punc">,</span>
+    <span class="str">"prompt engineering"</span><span class="punc">,</span> <span class="str">"Langfuse"</span><span class="punc">,</span> <span class="str">"multi-agent systems"</span>
+  <span class="punc">],</span>
+  <span class="str">"ml_dl"</span><span class="punc">:</span> <span class="punc">[</span>
+    <span class="str">"PyTorch"</span><span class="punc">,</span> <span class="str">"Transformers"</span><span class="punc">,</span> <span class="str">"BERT/ModernBERT"</span><span class="punc">,</span>
+    <span class="str">"PINNs"</span><span class="punc">,</span> <span class="str">"multi-task learning"</span><span class="punc">,</span> <span class="str">"uncertainty weighting"</span><span class="punc">,</span>
+    <span class="str">"FAISS"</span><span class="punc">,</span> <span class="str">"vector search"</span>
+  <span class="punc">],</span>
+  <span class="str">"infra_backend"</span><span class="punc">:</span> <span class="punc">[</span>
+    <span class="str">"FastAPI"</span><span class="punc">,</span> <span class="str">"Redis"</span><span class="punc">,</span> <span class="str">"PostgreSQL"</span><span class="punc">,</span> <span class="str">"FalkorDB"</span><span class="punc">,</span>
+    <span class="str">"Neo4j"</span><span class="punc">,</span> <span class="str">"Kafka"</span><span class="punc">,</span> <span class="str">"AWS EC2"</span><span class="punc">,</span> <span class="str">"SageMaker"</span><span class="punc">,</span> <span class="str">"Docker"</span>
+  <span class="punc">],</span>
+  <span class="str">"tools_frontend"</span><span class="punc">:</span> <span class="punc">[</span>
+    <span class="str">"React"</span><span class="punc">,</span> <span class="str">"Unsloth"</span><span class="punc">,</span> <span class="str">"HuggingFace PEFT"</span><span class="punc">,</span> <span class="str">"Ollama"</span><span class="punc">,</span> <span class="str">"Git"</span>
+  <span class="punc">]</span>
+<span class="punc">}</span>
+</pre>
+      </div>
+
+      <!-- Contact -->
+      <div class="h-section" id="contact">
+        <h2><span class="accent">$</span> mail aditya</h2>
+        <span class="meta">three ways</span>
+      </div>
+
+      <div class="contact-block">
+        <h2>Let's <span class="accent">talk</span>.</h2>
+        <div class="com">// open to AI/ML engineering roles · Hyderabad / remote</div>
+        <div class="contact-list">
+          <a href="mailto:akhil.dasika47@gmail.com">
+            <div class="l">// email · best</div>
+            <div class="v">akhil.dasika47@gmail.com</div>
+          </a>
+          <a href="https://github.com/adityadasika21" target="_blank" rel="noopener">
+            <div class="l">// github</div>
+            <div class="v">@adityadasika21</div>
+          </a>
+          <a href="https://linkedin.com/in/adityadasika21" target="_blank" rel="noopener">
+            <div class="l">// linkedin</div>
+            <div class="v">/in/adityadasika21</div>
+          </a>
+          <a href="Aditya_Dasika_Resume.pdf" download="Aditya_Dasika_Resume.pdf" style="grid-column: 1 / -1; border-top: 1px solid var(--line);">
+            <div class="l" style="color: var(--accent);">// résumé · download</div>
+            <div class="v">Aditya_Dasika_Resume.pdf ↓</div>
+          </a>
+        </div>
+      </div>
+
+      <div style="margin-top: 56px; color: var(--text-faint); font-size: 11.5px;">
+        // projectindex.online — © 2026 aditya dasika · background: 1d wave eq. ∂²u/∂t² = c²·∂²u/∂x²
+      </div>
+    </div>
+  </main>
+
+  <!-- Status bar -->
+  <footer class="statusbar">
+    <span class="seg">⎇ main</span>
+    <span class="seg">↑ 0 ↓ 0</span>
+    <span class="seg">● open to roles</span>
+    <div class="right">
+      <span class="seg">UTF-8</span>
+      <span class="seg">Markdown</span>
+      <span class="seg">Ln 1, Col 1</span>
+      <span class="seg">↗ projectindex.online</span>
+    </div>
+  </footer>
+</div>
+
+<script src="pinn-bg.js"></script>
+<script>
+  PINNBackground.init({
+    color: "#00d4ff",
+    opacity: 0.10,
+    bands: 5,
+    equation: "∂²u/∂t² = c² · ∂²u/∂x²"
+  });
+
+  // Active tree row highlighting on scroll
+  const sections = ['hero', 'about', 'phenom', 'blueleaves', 'pinns', 'gpt', 'mmbert', 'indexnotes', 'skills', 'contact'];
+  const rows = document.querySelectorAll('.tree-row[data-jump]');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        rows.forEach(r => r.classList.toggle('active', r.dataset.jump === id));
+      }
+    });
+  }, { rootMargin: "-30% 0px -60% 0px" });
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+</script>
+</body>
+</html>
