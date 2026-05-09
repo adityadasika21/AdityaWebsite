@@ -1354,6 +1354,103 @@
     const el = document.getElementById(id);
     if (el) obs.observe(el);
   });
+
+  // ── Analytics ─────────────────────────────────────────────────────────────
+  (function () {
+    function track(event, params) {
+      if (typeof gtag !== 'undefined') gtag('event', event, params || {});
+    }
+
+    function loc(el) {
+      if (el.closest('.titlebar'))      return 'titlebar';
+      if (el.closest('.hero'))          return 'hero';
+      if (el.closest('.contact-block')) return 'contact';
+      if (el.closest('.doc'))           return 'doc';
+      return 'other';
+    }
+
+    // Resume downloads — titlebar, hero, contact
+    document.querySelectorAll('a[download]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('resume_download', { location: loc(el), file_name: 'Aditya_Dasika_Resume.pdf' });
+      });
+    });
+
+    // Email CTA
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('cta_click', { cta_type: 'email', location: loc(el) });
+      });
+    });
+
+    // GitHub
+    document.querySelectorAll('a[href*="github.com"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('cta_click', { cta_type: 'github', location: loc(el) });
+      });
+    });
+
+    // LinkedIn
+    document.querySelectorAll('a[href*="linkedin.com"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('cta_click', { cta_type: 'linkedin', location: loc(el) });
+      });
+    });
+
+    // Variant switcher
+    document.querySelectorAll('.variant-switch a:not(.active)').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('view_switch', { from_view: 'terminal', to_view: el.textContent.trim() });
+      });
+    });
+
+    // Tab bar — clicking the editorial.html tab switches view
+    document.querySelectorAll('.tab:not(.active)').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('view_switch', { from_view: 'terminal', to_view: 'editorial', trigger: 'tab' });
+      });
+    });
+
+    // Sidebar file-tree navigation
+    document.querySelectorAll('.tree-row[data-jump]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var fname = el.querySelector('.tname') ? el.querySelector('.tname').textContent.trim() : el.dataset.jump;
+        track('sidebar_nav', { file: fname, section: el.dataset.jump, view: 'terminal' });
+      });
+    });
+
+    // Section visibility — fires once per section
+    var viewed = {};
+    var secObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !viewed[e.target.id]) {
+          viewed[e.target.id] = true;
+          track('section_view', { section: e.target.id, view: 'terminal' });
+        }
+      });
+    }, { threshold: 0.25 });
+    ['hero', 'about', 'phenom', 'blueleaves', 'pinns', 'gpt', 'mmbert', 'indexnotes', 'skills', 'contact'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) secObs.observe(el);
+    });
+
+    // Scroll depth — the editor div scrolls, not window
+    var depthFired = {};
+    var editorEl = document.querySelector('.editor');
+    var scrollEl = editorEl || window;
+    scrollEl.addEventListener('scroll', function () {
+      var top    = editorEl ? editorEl.scrollTop    : window.scrollY;
+      var height = editorEl ? editorEl.scrollHeight  : document.body.scrollHeight;
+      var client = editorEl ? editorEl.clientHeight  : window.innerHeight;
+      var pct = Math.min(100, Math.round(top / Math.max(1, height - client) * 100));
+      [25, 50, 75, 90].forEach(function (d) {
+        if (pct >= d && !depthFired[d]) {
+          depthFired[d] = true;
+          track('scroll_depth', { depth: d, view: 'terminal' });
+        }
+      });
+    }, { passive: true });
+  })();
 </script>
 </body>
 </html>

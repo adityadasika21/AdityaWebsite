@@ -1290,6 +1290,101 @@
     t.addEventListener('mouseenter', () => { t.dataset._orig = t.textContent; t.textContent = v; });
     t.addEventListener('mouseleave', () => { if (t.dataset._orig) t.textContent = t.dataset._orig; });
   });
+
+  // ── Analytics ─────────────────────────────────────────────────────────────
+  (function () {
+    function track(event, params) {
+      if (typeof gtag !== 'undefined') gtag('event', event, params || {});
+    }
+
+    function loc(el) {
+      if (el.closest('.nav-inner'))    return 'nav';
+      if (el.closest('.hero'))         return 'hero';
+      if (el.closest('.about-side'))   return 'about';
+      if (el.closest('.contact-grid')) return 'contact';
+      if (el.closest('footer'))        return 'footer';
+      return 'other';
+    }
+
+    // Resume downloads — nav, hero, about sidebar, contact
+    document.querySelectorAll('a[download]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('resume_download', { location: loc(el), file_name: 'Aditya_Dasika_Resume.pdf' });
+      });
+    });
+
+    // Email CTA
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('cta_click', { cta_type: 'email', location: loc(el) });
+      });
+    });
+
+    // GitHub
+    document.querySelectorAll('a[href*="github.com"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('cta_click', { cta_type: 'github', location: loc(el) });
+      });
+    });
+
+    // LinkedIn
+    document.querySelectorAll('a[href*="linkedin.com"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('cta_click', { cta_type: 'linkedin', location: loc(el) });
+      });
+    });
+
+    // Internal nav links (work / projects / skills / contact)
+    document.querySelectorAll('.nav-links a').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('nav_click', { section: el.getAttribute('href').replace('#', '') });
+      });
+    });
+
+    // Variant switcher
+    document.querySelectorAll('.variant-switch a:not(.active)').forEach(function (el) {
+      el.addEventListener('click', function () {
+        track('view_switch', { from_view: 'editorial', to_view: el.textContent.trim() });
+      });
+    });
+
+    // Footer "view: /terminal" link
+    var footerTerminal = document.querySelector('footer a[href="terminal.html"]');
+    if (footerTerminal) {
+      footerTerminal.addEventListener('click', function () {
+        track('view_switch', { from_view: 'editorial', to_view: 'terminal', trigger: 'footer' });
+      });
+    }
+
+    // Section visibility — fires once per section per session
+    var viewed = {};
+    var secObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !viewed[e.target.id]) {
+          viewed[e.target.id] = true;
+          track('section_view', { section: e.target.id, view: 'editorial' });
+        }
+      });
+    }, { threshold: 0.25 });
+    ['about', 'work', 'projects', 'skills', 'contact'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) secObs.observe(el);
+    });
+
+    // Scroll depth milestones
+    var depthFired = {};
+    window.addEventListener('scroll', function () {
+      var pct = Math.min(100, Math.round(
+        window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight) * 100
+      ));
+      [25, 50, 75, 90].forEach(function (d) {
+        if (pct >= d && !depthFired[d]) {
+          depthFired[d] = true;
+          track('scroll_depth', { depth: d, view: 'editorial' });
+        }
+      });
+    }, { passive: true });
+  })();
 </script>
 </body>
 </html>
